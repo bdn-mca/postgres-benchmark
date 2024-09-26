@@ -68,7 +68,8 @@ SmallBenchmarkStoredProcService.StoredProcedure: WarmupCount=0 -> 5 outliers wer
 
 ## Small EF Core (not bulk)
 Inserting 100 items with entity framework, without using bulk extensions.
-One uses `DbSet.Add` and is adding entities one by one in a foreach, the other uses `DbSet.AddRange` and is adding a range from a list in one go.
+- One uses `DbSet.Add` and is adding entities one by one in a foreach
+- The other uses `DbSet.AddRange` and is adding a range from a list in one go
 
 | Method           | BenchmarkDbType | Mean     | Error     | StdDev    |
 |----------------- |---------------- |---------:|----------:|----------:|
@@ -243,8 +244,8 @@ BulkBenchmarkStoredProcService.StoredProcedure: InvocationCount=1, MaxIterationC
 
 ## Bulk Entity Framework Core
 Inserting 1.000.000 items with EF Core, using EF.BulkExtensions.
-`CleanupTable` tells if the data in the `benchmark` table was deleted (for PG additionally vacuumed) after each iteration.
-`BatchSize` is the EFCore.Extensions BatchSize property - meaning the insert is done multiple times in the determined batch.
+- `CleanupTable` tells if the data in the `benchmark` table was deleted (for PG additionally vacuumed) after each iteration.
+- `BatchSize` is the EFCore.Extensions BatchSize property - meaning the insert is done multiple times in the determined batch.
 
 | Method     | BatchSize | BenchmarkDbType | CleanupTable | Mean     | Error     | StdDev    | Median   |
 |----------- |---------- |---------------- |------------- |---------:|----------:|----------:|---------:|
