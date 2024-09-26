@@ -3,7 +3,7 @@ Benchmarking PostgreSql vs. MS SQL performance with EF Core and Stored procedure
 
 # Getting started
 - Manually create the tables and stored procedures
-  - You can find the scripts in the Database folder
+  - You can find the scripts in the [Database](https://github.com/bdn-mca/postgres-benchmark/tree/main/Database) folder
 - Build and Run in Release configuration
 
 # Benchmarks
