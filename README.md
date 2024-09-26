@@ -20,6 +20,7 @@ Stored procedures inserting 100 items.
 | StoredProcedure | PostgreSql      | 1.220 ms | 0.0242 ms | 0.0645 ms | 1.206 ms |
 
 #### Small stored procedure [BenchmarkDbType=MsSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 1.939 ms, StdErr = 0.018 ms (0.95%), N = 99, StdDev = 0.184 ms
 Min = 1.651 ms, Q1 = 1.812 ms, Median = 1.889 ms, Q3 = 2.054 ms, Max = 2.422 ms
@@ -38,6 +39,7 @@ Skewness = 0.73, Kurtosis = 2.74, MValue = 2.13
 ---------------------------------------------------
 
 #### Small stored procedure [BenchmarkDbType=PostgreSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 1.220 ms, StdErr = 0.007 ms (0.58%), N = 83, StdDev = 0.064 ms
 Min = 1.125 ms, Q1 = 1.172 ms, Median = 1.206 ms, Q3 = 1.255 ms, Max = 1.412 ms
@@ -70,6 +72,7 @@ One uses `DbSet.Add` and is adding entities one by one in a foreach, the other u
 | RangeAdd         | PostgreSql      | 6.095 ms | 0.1205 ms | 0.1767 ms |
 
 #### Small EF Core Single Add: [BenchmarkDbType=MsSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 7.212 ms, StdErr = 0.034 ms (0.47%), N = 15, StdDev = 0.130 ms
 Min = 7.028 ms, Q1 = 7.134 ms, Median = 7.178 ms, Q3 = 7.300 ms, Max = 7.445 ms
@@ -82,6 +85,7 @@ Skewness = 0.38, Kurtosis = 1.78, MValue = 2
 ---------------------------------------------------
 
 #### Small EF Core Range Add: [BenchmarkDbType=MsSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 7.148 ms, StdErr = 0.036 ms (0.51%), N = 32, StdDev = 0.205 ms
 Min = 6.917 ms, Q1 = 6.998 ms, Median = 7.065 ms, Q3 = 7.227 ms, Max = 7.624 ms
@@ -96,6 +100,7 @@ Skewness = 0.96, Kurtosis = 2.76, MValue = 2
 ---------------------------------------------------
 
 #### Small EF Core Single Add: [BenchmarkDbType=PostgreSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 6.140 ms, StdErr = 0.034 ms (0.56%), N = 38, StdDev = 0.212 ms
 Min = 5.755 ms, Q1 = 5.976 ms, Median = 6.146 ms, Q3 = 6.293 ms, Max = 6.635 ms
@@ -111,6 +116,7 @@ Skewness = 0.14, Kurtosis = 2.31, MValue = 2
 ---------------------------------------------------
 
 #### Small EF Core Range Add: [BenchmarkDbType=PostgreSql]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 6.095 ms, StdErr = 0.033 ms (0.54%), N = 29, StdDev = 0.177 ms
 Min = 5.781 ms, Q1 = 5.947 ms, Median = 6.083 ms, Q3 = 6.209 ms, Max = 6.447 ms
@@ -141,6 +147,7 @@ Inserting 1.000.000 items with stored procedures, using `general_series`.
 | StoredProcedure | PostgreSql      | True         |  8.366 s |  0.1627 s |  0.1741 s |
 
 #### Bulk stored procedure [BenchmarkDbType=MsSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 14.232 s, StdErr = 0.769 s (5.40%), N = 29, StdDev = 4.139 s
 Min = 7.258 s, Q1 = 12.793 s, Median = 16.215 s, Q3 = 16.598 s, Max = 21.659 s
@@ -157,6 +164,7 @@ Skewness = -0.56, Kurtosis = 2.12, MValue = 3
 ---------------------------------------------------
 
 #### Bulk stored procedure [BenchmarkDbType=MsSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 6.717 s, StdErr = 0.059 s (0.87%), N = 30, StdDev = 0.321 s
 Min = 6.185 s, Q1 = 6.425 s, Median = 6.770 s, Q3 = 6.914 s, Max = 7.287 s
@@ -171,6 +179,7 @@ Skewness = -0.13, Kurtosis = 1.89, MValue = 2.77
 ---------------------------------------------------
 
 #### Bulk stored procedure [BenchmarkDbType=PostgreSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 34.746 s, StdErr = 3.162 s (9.10%), N = 30, StdDev = 17.317 s
 Min = 7.929 s, Q1 = 20.534 s, Median = 32.434 s, Q3 = 51.746 s, Max = 59.714 s
@@ -185,6 +194,7 @@ Skewness = 0.01, Kurtosis = 1.5, MValue = 3
 ---------------------------------------------------
 
 #### Bulk stored procedure [BenchmarkDbType=PostgreSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 8.366 s, StdErr = 0.041 s (0.49%), N = 18, StdDev = 0.174 s
 Min = 8.070 s, Q1 = 8.264 s, Median = 8.335 s, Q3 = 8.515 s, Max = 8.655 s
@@ -218,6 +228,7 @@ Inserting 1.000.000 items with EF Core, using EF.BulkExtensions.
 | EfCoreBulk | 50000     | PostgreSql      | True         |  5.415 s |  0.0872 s |  0.0773 s |  5.421 s |
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 23.840 s, StdErr = 0.619 s (2.60%), N = 30, StdDev = 3.391 s
 Min = 14.613 s, Q1 = 23.104 s, Median = 25.082 s, Q3 = 26.042 s, Max = 27.686 s
@@ -234,6 +245,7 @@ Skewness = -1.44, Kurtosis = 4.15, MValue = 2.5
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 14.088 s, StdErr = 0.066 s (0.47%), N = 15, StdDev = 0.256 s
 Min = 13.726 s, Q1 = 13.931 s, Median = 13.998 s, Q3 = 14.325 s, Max = 14.455 s
@@ -246,6 +258,7 @@ Skewness = 0.25, Kurtosis = 1.46, MValue = 2
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 30.771 s, StdErr = 3.512 s (11.41%), N = 30, StdDev = 19.236 s
 Min = 5.170 s, Q1 = 15.441 s, Median = 23.212 s, Q3 = 51.885 s, Max = 60.232 s
@@ -259,6 +272,7 @@ Skewness = 0.31, Kurtosis = 1.43, MValue = 2.67
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 5.444 s, StdErr = 0.015 s (0.28%), N = 15, StdDev = 0.059 s
 Min = 5.358 s, Q1 = 5.406 s, Median = 5.423 s, Q3 = 5.489 s, Max = 5.563 s
@@ -270,6 +284,7 @@ Skewness = 0.46, Kurtosis = 1.98, MValue = 2
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 16.129 s, StdErr = 0.522 s (3.23%), N = 30, StdDev = 2.857 s
 Min = 8.958 s, Q1 = 16.550 s, Median = 17.407 s, Q3 = 17.842 s, Max = 18.213 s
@@ -284,6 +299,7 @@ Skewness = -1.51, Kurtosis = 3.71, MValue = 2
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 8.657 s, StdErr = 0.042 s (0.49%), N = 19, StdDev = 0.184 s
 Min = 8.363 s, Q1 = 8.517 s, Median = 8.589 s, Q3 = 8.855 s, Max = 8.939 s
@@ -297,6 +313,7 @@ Skewness = 0.26, Kurtosis = 1.43, MValue = 2
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=False]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 31.127 s, StdErr = 3.438 s (11.04%), N = 30, StdDev = 18.828 s
 Min = 5.771 s, Q1 = 16.059 s, Median = 24.009 s, Q3 = 50.338 s, Max = 61.805 s
@@ -311,6 +328,7 @@ Skewness = 0.31, Kurtosis = 1.49, MValue = 3
 ---------------------------------------------------
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=True]
+
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
 Mean = 5.415 s, StdErr = 0.021 s (0.38%), N = 14, StdDev = 0.077 s
 Min = 5.288 s, Q1 = 5.374 s, Median = 5.421 s, Q3 = 5.480 s, Max = 5.515 s
@@ -320,3 +338,8 @@ Skewness = -0.36, Kurtosis = 1.69, MValue = 2
 -------------------- Histogram --------------------
 [5.246 s ; 5.530 s) | @@@@@@@@@@@@@@
 ---------------------------------------------------
+
+#### Outliers
+BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (14.61 s..17.53 s)
+BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 6 outliers were detected (8.96 s..13.09 s)
+BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (5.68 s, 5.68 s)
