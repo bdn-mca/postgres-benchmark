@@ -28,6 +28,7 @@ IQR = 0.241 ms, LowerFence = 1.451 ms, UpperFence = 2.416 ms
 ConfidenceInterval = [1.876 ms; 2.002 ms] (CI 99.9%), Margin = 0.063 ms (3.23% of Mean)
 Skewness = 0.73, Kurtosis = 2.74, MValue = 2.13
 
+```
 -------------------- Histogram --------------------
 [1.599 ms ; 1.687 ms) | @@
 [1.687 ms ; 1.804 ms) | @@@@@@@@@@@@@@@@@@@@
@@ -38,6 +39,7 @@ Skewness = 0.73, Kurtosis = 2.74, MValue = 2.13
 [2.239 ms ; 2.343 ms) | @@@@@@@@
 [2.343 ms ; 2.440 ms) | @@
 ---------------------------------------------------
+```
 
 #### Small stored procedure [BenchmarkDbType=PostgreSql]
 
@@ -48,6 +50,7 @@ IQR = 0.083 ms, LowerFence = 1.048 ms, UpperFence = 1.380 ms
 ConfidenceInterval = [1.195 ms; 1.244 ms] (CI 99.9%), Margin = 0.024 ms (1.98% of Mean)
 Skewness = 0.92, Kurtosis = 3.36, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [1.106 ms ; 1.150 ms) | @@@@@@@
 [1.150 ms ; 1.189 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -57,6 +60,7 @@ Skewness = 0.92, Kurtosis = 3.36, MValue = 2
 [1.314 ms ; 1.372 ms) | @@@@@
 [1.372 ms ; 1.431 ms) | @@
 ---------------------------------------------------
+```
 
 #### Outliers
 SmallBenchmarkStoredProcService.StoredProcedure: WarmupCount=0 -> 1 outlier  was  removed (2.46 ms)
@@ -82,10 +86,12 @@ IQR = 0.166 ms, LowerFence = 6.885 ms, UpperFence = 7.549 ms
 ConfidenceInterval = [7.073 ms; 7.351 ms] (CI 99.9%), Margin = 0.139 ms (1.93% of Mean)
 Skewness = 0.38, Kurtosis = 1.78, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [6.959 ms ; 7.111 ms) | @@@
 [7.111 ms ; 7.477 ms) | @@@@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Small EF Core Range Add: [BenchmarkDbType=MsSql]
 
@@ -96,12 +102,14 @@ IQR = 0.230 ms, LowerFence = 6.653 ms, UpperFence = 7.572 ms
 ConfidenceInterval = [7.017 ms; 7.280 ms] (CI 99.9%), Margin = 0.132 ms (1.84% of Mean)
 Skewness = 0.96, Kurtosis = 2.76, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [6.912 ms ; 7.081 ms) | @@@@@@@@@@@@@@@@@
 [7.081 ms ; 7.290 ms) | @@@@@@@
 [7.290 ms ; 7.460 ms) | @@@@@
 [7.460 ms ; 7.661 ms) | @@@
 ---------------------------------------------------
+```
 
 #### Small EF Core Single Add: [BenchmarkDbType=PostgreSql]
 
@@ -112,6 +120,7 @@ IQR = 0.317 ms, LowerFence = 5.500 ms, UpperFence = 6.768 ms
 ConfidenceInterval = [6.017 ms; 6.262 ms] (CI 99.9%), Margin = 0.123 ms (2.00% of Mean)
 Skewness = 0.14, Kurtosis = 2.31, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [5.742 ms ; 5.910 ms) | @@@@@
 [5.910 ms ; 6.076 ms) | @@@@@@@@@@@
@@ -119,6 +128,7 @@ Skewness = 0.14, Kurtosis = 2.31, MValue = 2
 [6.330 ms ; 6.522 ms) | @@@@@
 [6.522 ms ; 6.718 ms) | @
 ---------------------------------------------------
+```
 
 #### Small EF Core Range Add: [BenchmarkDbType=PostgreSql]
 
@@ -129,12 +139,14 @@ IQR = 0.262 ms, LowerFence = 5.555 ms, UpperFence = 6.602 ms
 ConfidenceInterval = [5.974 ms; 6.215 ms] (CI 99.9%), Margin = 0.121 ms (1.98% of Mean)
 Skewness = 0.15, Kurtosis = 2.21, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [5.723 ms ; 5.890 ms) | @@@
 [5.890 ms ; 6.069 ms) | @@@@@@@@@
 [6.069 ms ; 6.220 ms) | @@@@@@@@@@@@
 [6.220 ms ; 6.448 ms) | @@@@@
 ---------------------------------------------------
+```
 
 #### Outliers
 SmallBenchmarkEfService.EfCoreSingleAdd: WarmupCount=0  -> 1 outlier  was  removed (7.87 ms)
@@ -161,6 +173,7 @@ IQR = 3.805 s, LowerFence = 7.086 s, UpperFence = 22.304 s
 ConfidenceInterval = [11.408 s; 17.056 s] (CI 99.9%), Margin = 2.824 s (19.84% of Mean)
 Skewness = -0.56, Kurtosis = 2.12, MValue = 3
 
+```
 -------------------- Histogram --------------------
 [ 6.053 s ;  9.589 s) | @@@@@@@
 [ 9.589 s ; 11.141 s) |
@@ -169,6 +182,7 @@ Skewness = -0.56, Kurtosis = 2.12, MValue = 3
 [17.516 s ; 19.183 s) |
 [19.183 s ; 22.719 s) | @@
 ---------------------------------------------------
+```
 
 #### Bulk stored procedure [BenchmarkDbType=MsSql, CleanupTable=True]
 
@@ -179,12 +193,14 @@ IQR = 0.489 s, LowerFence = 5.692 s, UpperFence = 7.647 s
 ConfidenceInterval = [6.502 s; 6.931 s] (CI 99.9%), Margin = 0.215 s (3.19% of Mean)
 Skewness = -0.13, Kurtosis = 1.89, MValue = 2.77
 
+```
 -------------------- Histogram --------------------
 [6.177 s ; 6.449 s) | @@@@@@@@@
 [6.449 s ; 6.733 s) | @@@@
 [6.733 s ; 7.004 s) | @@@@@@@@@@@@@
 [7.004 s ; 7.298 s) | @@@@
 ---------------------------------------------------
+```
 
 #### Bulk stored procedure [BenchmarkDbType=PostgreSql, CleanupTable=False]
 
@@ -195,12 +211,14 @@ IQR = 31.212 s, LowerFence = -26.283 s, UpperFence = 98.563 s
 ConfidenceInterval = [23.176 s; 46.315 s] (CI 99.9%), Margin = 11.570 s (33.30% of Mean)
 Skewness = 0.01, Kurtosis = 1.5, MValue = 3
 
+```
 -------------------- Histogram --------------------
 [ 0.614 s ; 16.791 s) | @@@@@
 [16.791 s ; 31.420 s) | @@@@@@@@@@
 [31.420 s ; 46.251 s) | @@@@@
 [46.251 s ; 60.880 s) | @@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk stored procedure [BenchmarkDbType=PostgreSql, CleanupTable=True]
 
@@ -211,11 +229,13 @@ IQR = 0.251 s, LowerFence = 7.887 s, UpperFence = 8.892 s
 ConfidenceInterval = [8.203 s; 8.529 s] (CI 99.9%), Margin = 0.163 s (1.94% of Mean)
 Skewness = 0.06, Kurtosis = 1.8, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [7.983 s ; 8.183 s) | @@
 [8.183 s ; 8.358 s) | @@@@@@@@@
 [8.358 s ; 8.662 s) | @@@@@@@
 ---------------------------------------------------
+```
 
 #### Outliers
 BulkBenchmarkStoredProcService.StoredProcedure: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 1 outlier  was  removed (23.64 s)
@@ -246,6 +266,7 @@ IQR = 2.938 s, LowerFence = 18.697 s, UpperFence = 30.449 s
 ConfidenceInterval = [21.574 s; 26.105 s] (CI 99.9%), Margin = 2.265 s (9.50% of Mean)
 Skewness = -1.44, Kurtosis = 4.15, MValue = 2.5
 
+```
 -------------------- Histogram --------------------
 [13.181 s ; 16.161 s) | @@
 [16.161 s ; 19.219 s) | @
@@ -254,6 +275,7 @@ Skewness = -1.44, Kurtosis = 4.15, MValue = 2.5
 [23.826 s ; 26.691 s) | @@@@@@@@@@@@@@@@@@@@@
 [26.691 s ; 29.118 s) | @
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=True]
 
@@ -264,10 +286,12 @@ IQR = 0.393 s, LowerFence = 13.341 s, UpperFence = 14.915 s
 ConfidenceInterval = [13.815 s; 14.361 s] (CI 99.9%), Margin = 0.273 s (1.94% of Mean)
 Skewness = 0.25, Kurtosis = 1.46, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [13.590 s ; 14.019 s) | @@@@@@@@@
 [14.019 s ; 14.478 s) | @@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=False]
 
@@ -278,11 +302,13 @@ IQR = 36.444 s, LowerFence = -39.225 s, UpperFence = 106.550 s
 ConfidenceInterval = [17.919 s; 43.623 s] (CI 99.9%), Margin = 12.852 s (41.77% of Mean)
 Skewness = 0.31, Kurtosis = 1.43, MValue = 2.67
 
+```
 -------------------- Histogram --------------------
 [ 5.056 s ; 21.306 s) | @@@@@@@@@@@@@@@
 [21.306 s ; 41.244 s) | @@@@@
 [41.244 s ; 61.794 s) | @@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=True]
 
@@ -293,9 +319,11 @@ IQR = 0.083 s, LowerFence = 5.281 s, UpperFence = 5.614 s
 ConfidenceInterval = [5.381 s; 5.506 s] (CI 99.9%), Margin = 0.063 s (1.15% of Mean)
 Skewness = 0.46, Kurtosis = 1.98, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [5.352 s ; 5.594 s) | @@@@@@@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=False]
 
@@ -306,12 +334,14 @@ IQR = 1.292 s, LowerFence = 14.612 s, UpperFence = 19.780 s
 ConfidenceInterval = [14.220 s; 18.038 s] (CI 99.9%), Margin = 1.909 s (11.84% of Mean)
 Skewness = -1.51, Kurtosis = 3.71, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [ 8.816 s ; 11.230 s) | @@@@
 [11.230 s ; 13.823 s) | @@
 [13.823 s ; 15.925 s) |
 [15.925 s ; 18.339 s) | @@@@@@@@@@@@@@@@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=True]
 
@@ -322,11 +352,13 @@ IQR = 0.339 s, LowerFence = 8.009 s, UpperFence = 9.363 s
 ConfidenceInterval = [8.491 s; 8.823 s] (CI 99.9%), Margin = 0.166 s (1.92% of Mean)
 Skewness = 0.26, Kurtosis = 1.43, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [8.272 s ; 8.453 s) | @
 [8.453 s ; 8.635 s) | @@@@@@@@@@
 [8.635 s ; 8.962 s) | @@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=False]
 
@@ -337,12 +369,14 @@ IQR = 34.279 s, LowerFence = -35.359 s, UpperFence = 101.756 s
 ConfidenceInterval = [18.548 s; 43.707 s] (CI 99.9%), Margin = 12.580 s (40.41% of Mean)
 Skewness = 0.31, Kurtosis = 1.49, MValue = 3
 
+```
 -------------------- Histogram --------------------
 [ 4.931 s ; 20.838 s) | @@@@@@@@@@@@@@
 [20.838 s ; 37.584 s) | @@@@@
 [37.584 s ; 46.595 s) | @@
 [46.595 s ; 62.501 s) | @@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=True]
 
@@ -353,9 +387,11 @@ IQR = 0.106 s, LowerFence = 5.216 s, UpperFence = 5.638 s
 ConfidenceInterval = [5.327 s; 5.502 s] (CI 99.9%), Margin = 0.087 s (1.61% of Mean)
 Skewness = -0.36, Kurtosis = 1.69, MValue = 2
 
+```
 -------------------- Histogram --------------------
 [5.246 s ; 5.530 s) | @@@@@@@@@@@@@@
 ---------------------------------------------------
+```
 
 #### Outliers
 BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (14.61 s..17.53 s)
