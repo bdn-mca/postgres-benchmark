@@ -245,7 +245,7 @@ BulkBenchmarkStoredProcService.StoredProcedure: InvocationCount=1, MaxIterationC
 ## Bulk Entity Framework Core
 Inserting 1.000.000 items with EF Core, using EF.BulkExtensions.
 - `CleanupTable` tells if the data in the `benchmark` table was deleted (for PG additionally vacuumed) after each iteration.
-- `BatchSize` is the EFCore.Extensions BatchSize property - meaning the insert is done multiple times in the determined batch.
+- `BatchSize` is the EFCore.Extensions BatchSize property - meaning the insert is done multiple times with the determined batch number of items.
 
 | Method     | BatchSize | BenchmarkDbType | CleanupTable | Mean     | Error     | StdDev    | Median   |
 |----------- |---------- |---------------- |------------- |---------:|----------:|----------:|---------:|
