@@ -2,7 +2,7 @@
 
 namespace PostgreSqlBenchmark.Infrastructure;
 
-internal class PgBenchmarkDbContext : DbContext
+internal class PgBenchmarkDbContext : DbContext, IBenchmarkDbContext
 {
     const string ConnectionString = @"Host=localhost;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
 

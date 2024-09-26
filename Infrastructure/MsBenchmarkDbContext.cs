@@ -2,7 +2,7 @@
 
 namespace PostgreSqlBenchmark.Infrastructure;
 
-internal class MsBenchmarkDbContext : DbContext
+internal class MsBenchmarkDbContext : DbContext, IBenchmarkDbContext
 {
     const string ConnectionString = @"Server=.;Database=Benchmark;Trusted_Connection=True;TrustServerCertificate=true";
 
