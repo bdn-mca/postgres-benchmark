@@ -1,64 +1,82 @@
 ﻿using BenchmarkDotNet.Attributes;
 using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
 namespace PostgreSqlBenchmark;
 
 [WarmupCount(0)]
-[MinIterationCount(2)]
-[MaxIterationCount(4)]
+[MaxIterationCount(30)]
 public class BulkBenchmarkEfService
 {
+    [ParamsAllValues]
+    public DatabaseType BenchmarkDbType { get; set; }
+
+    [ParamsAllValues]
+    public bool CleanupTable { get; set; }
+
     [Params(2000, 50000)]
     public int BatchSize { get; set; }
 
-    [Benchmark]
-    public async Task MsEfCoreBulk()
+    internal List<BenchmarkDbEntity> Entities { get; set; } = [];
+
+    [IterationSetup]
+    public void PrepareList()
     {
-        List<BenchmarkDbEntity> entities = [];
+        Entities.Clear();
         for (int i = 1; i < 1_000_001; i++)
         {
-            entities.Add(new BenchmarkDbEntity
+            Entities.Add(new BenchmarkDbEntity
             {
                 Uid = Guid.NewGuid(),
                 Id = i,
                 CreatedOn = DateTime.UtcNow,
                 DeletedOn = null,
-                Name = "MS EfCore",
+                Name = BenchmarkDbType.ToString(),
                 Type = 1,
                 Properties = null,
             });
         }
-        using var ctx = new MsBenchmarkDbContext();
-        await ctx.BulkInsertAsync(entities,
+    }
+
+    [Benchmark]
+    public async Task EfCoreBulk()
+    {
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        await ctx.BulkInsertAsync(Entities,
             new BulkConfig
             {
                 BatchSize = BatchSize
             });
     }
 
-    [Benchmark]
-    public async Task PgEfCoreBulk()
+    [IterationCleanup]
+    public void IterationCleanup()
     {
-        List<BenchmarkDbEntity> entities = [];
-        for (int i = 1; i < 1_000_001; i++)
+        if (CleanupTable)
         {
-            entities.Add(new BenchmarkDbEntity
-            {
-                Uid = Guid.NewGuid(),
-                Id = i,
-                CreatedOn = DateTime.UtcNow,
-                DeletedOn = null,
-                Name = "PG EfCore",
-                Type = 2,
-                Properties = null,
-            });
+            CleanTable();
         }
-        using var ctx = new PgBenchmarkDbContext();
-        await ctx.BulkInsertAsync(entities,
-            new BulkConfig
-            {
-                BatchSize = BatchSize
-            });
+        else if (BenchmarkDbType == DatabaseType.PostgreSql)
+        {
+            using var pgCtx = new PgBenchmarkDbContext();
+            pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("cluster").ToList();
+        }
+    }
+
+    [GlobalCleanup]
+    public void CleanTable()
+    {
+        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        {
+            using var pgCtx = new PgBenchmarkDbContext();
+            pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToList();
+            pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToList();
+        }
+        else if (BenchmarkDbType == DatabaseType.MsSql)
+        {
+            using var msCtx = new MsBenchmarkDbContext();
+            msCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from Benchmark").ToList();
+        }
     }
 }

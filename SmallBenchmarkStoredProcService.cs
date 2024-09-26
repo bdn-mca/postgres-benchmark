@@ -7,17 +7,39 @@ namespace PostgreSqlBenchmark;
 [WarmupCount(0)]
 public class SmallBenchmarkStoredProcService
 {
-    [Benchmark]
-    public async Task MsStoredProcedure()
-    {
-        using var ctx = new MsBenchmarkDbContext();
-        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw("exec MsSqlBenchmarkInsert 100").ToListAsync();
-    }
+    [ParamsAllValues]
+    public DatabaseType BenchmarkDbType { get; set; }
 
     [Benchmark]
-    public async Task PgStoredProcedure()
+    public async Task StoredProcedure()
     {
-        using var ctx = new PgBenchmarkDbContext();
-        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw("call public.postgres_benchmark_insert(100)").ToListAsync();
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw(GetSqlCommand()).ToListAsync();
+    }
+
+    [GlobalCleanup]
+    public async Task CleanTable()
+    {
+        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        {
+            using var pgCtx = new PgBenchmarkDbContext();
+            await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToListAsync();
+            await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToListAsync();
+        }
+        else if (BenchmarkDbType == DatabaseType.MsSql)
+        {
+            using var msCtx = new MsBenchmarkDbContext();
+            await msCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from Benchmark").ToListAsync();
+        }
+    }
+
+    private string GetSqlCommand()
+    {
+        return BenchmarkDbType switch
+        {
+            DatabaseType.MsSql => "exec MsSqlBenchmarkInsert 100",
+            DatabaseType.PostgreSql => "call public.postgres_benchmark_insert(100)",
+            _ => throw new ArgumentException("Unknown value.", nameof(BenchmarkDbType)),
+        };
     }
 }

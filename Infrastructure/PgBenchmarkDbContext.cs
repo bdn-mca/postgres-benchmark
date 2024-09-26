@@ -2,7 +2,7 @@
 
 namespace PostgreSqlBenchmark.Infrastructure;
 
-internal class PgBenchmarkDbContext : DbContext, IBenchmarkDbContext
+internal class PgBenchmarkDbContext : BaseDbContext
 {
     const string ConnectionString = @"Host=localhost;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
 
@@ -10,8 +10,6 @@ internal class PgBenchmarkDbContext : DbContext, IBenchmarkDbContext
         : base()
     {
     }
-
-    public virtual DbSet<BenchmarkDbEntity> BenchmarkDbEntities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

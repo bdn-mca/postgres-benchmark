@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
 namespace PostgreSqlBenchmark;
@@ -12,7 +13,7 @@ public class SmallBenchmarkEfService
     [Benchmark]
     public async Task EfCoreSingleAdd()
     {
-        using IBenchmarkDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
         for (int i = 1; i < 101; i++)
         {
             ctx.BenchmarkDbEntities.Add(new BenchmarkDbEntity
@@ -46,8 +47,24 @@ public class SmallBenchmarkEfService
                 Properties = null,
             });
         }
-        using IBenchmarkDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
         ctx.BenchmarkDbEntities.AddRange(entities);
         await ctx.SaveChangesAsync();
+    }
+
+    [GlobalCleanup]
+    public async Task CleanTable()
+    {
+        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        {
+            using var pgCtx = new PgBenchmarkDbContext();
+            await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToListAsync();
+            await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToListAsync();
+        }
+        else if (BenchmarkDbType == DatabaseType.MsSql)
+        {
+            using var msCtx = new MsBenchmarkDbContext();
+            await msCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from Benchmark").ToListAsync();
+        }
     }
 }

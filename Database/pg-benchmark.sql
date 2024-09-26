@@ -26,3 +26,5 @@ CREATE INDEX IF NOT EXISTS benchmark_type_idx
     ON public.benchmark USING btree
     (type ASC NULLS LAST)
     TABLESPACE pg_default;
+
+cluster public.benchmark using benchmark_pkey;

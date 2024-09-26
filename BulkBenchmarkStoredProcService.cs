@@ -5,21 +5,54 @@ using PostgreSqlBenchmark.Infrastructure;
 namespace PostgreSqlBenchmark;
 
 [WarmupCount(0)]
-[MinIterationCount(2)]
-[MaxIterationCount(4)]
+[MaxIterationCount(30)]
 public class BulkBenchmarkStoredProcService
 {
-    [Benchmark]
-    public async Task MsStoredProcedure()
-    {
-        using var ctx = new MsBenchmarkDbContext();
-        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw("exec MsSqlBenchmarkInsert 1000000").ToListAsync();
-    }
+    [ParamsAllValues]
+    public DatabaseType BenchmarkDbType { get; set; }
+
+    [ParamsAllValues]
+    public bool CleanupTable { get; set; }
 
     [Benchmark]
-    public async Task PgStoredProcedure()
+    public async Task StoredProcedure()
     {
-        using var ctx = new PgBenchmarkDbContext();
-        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw("call public.postgres_benchmark_insert(1000000)").ToListAsync();
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        await ctx.Set<BenchmarkSpEntity>().FromSqlRaw(GetSqlCommand()).ToListAsync();
+    }
+
+    private string GetSqlCommand()
+    {
+        return BenchmarkDbType switch
+        {
+            DatabaseType.MsSql => "exec MsSqlBenchmarkInsert 1000000",
+            DatabaseType.PostgreSql => "call public.postgres_benchmark_insert(1000000)",
+            _ => throw new ArgumentException("Unknown value.", nameof(BenchmarkDbType)),
+        };
+    }
+
+    [IterationCleanup]
+    public void IterationCleanup()
+    {
+        if (CleanupTable)
+        {
+            CleanTable();
+        }
+    }
+
+    [GlobalCleanup]
+    public void CleanTable()
+    {
+        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        {
+            using var pgCtx = new PgBenchmarkDbContext();
+            pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToList();
+            pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToList();
+        }
+        else if (BenchmarkDbType == DatabaseType.MsSql)
+        {
+            using var msCtx = new MsBenchmarkDbContext();
+            msCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from Benchmark").ToList();
+        }
     }
 }

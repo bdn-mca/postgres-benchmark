@@ -2,7 +2,7 @@
 
 namespace PostgreSqlBenchmark.Infrastructure;
 
-internal class MsBenchmarkDbContext : DbContext, IBenchmarkDbContext
+internal class MsBenchmarkDbContext : BaseDbContext
 {
     const string ConnectionString = @"Server=.;Database=Benchmark;Trusted_Connection=True;TrustServerCertificate=true";
 
@@ -10,8 +10,6 @@ internal class MsBenchmarkDbContext : DbContext, IBenchmarkDbContext
         : base()
     {
     }
-
-    public virtual DbSet<BenchmarkDbEntity> BenchmarkDbEntities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -3,7 +3,7 @@
 namespace PostgreSqlBenchmark;
 internal class DbContextFactory
 {
-    public static IBenchmarkDbContext GetBenchmarkDbContext(DatabaseType dbType)
+    public static BaseDbContext GetBenchmarkDbContext(DatabaseType dbType)
     {
         switch (dbType)
         {
