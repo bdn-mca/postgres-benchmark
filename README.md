@@ -8,8 +8,8 @@ Benchmarking PostgreSql vs. MS SQL performance with EF Core and Stored procedure
 
 # Benchmarks
 ## Legend
-Error           : Half of 99.9% confidence interval
-StdDev          : Standard deviation of all measurements
+- Error           : Half of 99.9% confidence interval
+- StdDev          : Standard deviation of all measurements
 
 ## Small stored procedures
 Stored procedures inserting 100 items.
