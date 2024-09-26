@@ -27,6 +27,7 @@ Min = 1.651 ms, Q1 = 1.812 ms, Median = 1.889 ms, Q3 = 2.054 ms, Max = 2.422 ms
 IQR = 0.241 ms, LowerFence = 1.451 ms, UpperFence = 2.416 ms
 ConfidenceInterval = [1.876 ms; 2.002 ms] (CI 99.9%), Margin = 0.063 ms (3.23% of Mean)
 Skewness = 0.73, Kurtosis = 2.74, MValue = 2.13
+
 -------------------- Histogram --------------------
 [1.599 ms ; 1.687 ms) | @@
 [1.687 ms ; 1.804 ms) | @@@@@@@@@@@@@@@@@@@@
@@ -46,6 +47,7 @@ Min = 1.125 ms, Q1 = 1.172 ms, Median = 1.206 ms, Q3 = 1.255 ms, Max = 1.412 ms
 IQR = 0.083 ms, LowerFence = 1.048 ms, UpperFence = 1.380 ms
 ConfidenceInterval = [1.195 ms; 1.244 ms] (CI 99.9%), Margin = 0.024 ms (1.98% of Mean)
 Skewness = 0.92, Kurtosis = 3.36, MValue = 2
+
 -------------------- Histogram --------------------
 [1.106 ms ; 1.150 ms) | @@@@@@@
 [1.150 ms ; 1.189 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -79,6 +81,7 @@ Min = 7.028 ms, Q1 = 7.134 ms, Median = 7.178 ms, Q3 = 7.300 ms, Max = 7.445 ms
 IQR = 0.166 ms, LowerFence = 6.885 ms, UpperFence = 7.549 ms
 ConfidenceInterval = [7.073 ms; 7.351 ms] (CI 99.9%), Margin = 0.139 ms (1.93% of Mean)
 Skewness = 0.38, Kurtosis = 1.78, MValue = 2
+
 -------------------- Histogram --------------------
 [6.959 ms ; 7.111 ms) | @@@
 [7.111 ms ; 7.477 ms) | @@@@@@@@@@@@
@@ -92,6 +95,7 @@ Min = 6.917 ms, Q1 = 6.998 ms, Median = 7.065 ms, Q3 = 7.227 ms, Max = 7.624 ms
 IQR = 0.230 ms, LowerFence = 6.653 ms, UpperFence = 7.572 ms
 ConfidenceInterval = [7.017 ms; 7.280 ms] (CI 99.9%), Margin = 0.132 ms (1.84% of Mean)
 Skewness = 0.96, Kurtosis = 2.76, MValue = 2
+
 -------------------- Histogram --------------------
 [6.912 ms ; 7.081 ms) | @@@@@@@@@@@@@@@@@
 [7.081 ms ; 7.290 ms) | @@@@@@@
@@ -107,6 +111,7 @@ Min = 5.755 ms, Q1 = 5.976 ms, Median = 6.146 ms, Q3 = 6.293 ms, Max = 6.635 ms
 IQR = 0.317 ms, LowerFence = 5.500 ms, UpperFence = 6.768 ms
 ConfidenceInterval = [6.017 ms; 6.262 ms] (CI 99.9%), Margin = 0.123 ms (2.00% of Mean)
 Skewness = 0.14, Kurtosis = 2.31, MValue = 2
+
 -------------------- Histogram --------------------
 [5.742 ms ; 5.910 ms) | @@@@@
 [5.910 ms ; 6.076 ms) | @@@@@@@@@@@
@@ -123,6 +128,7 @@ Min = 5.781 ms, Q1 = 5.947 ms, Median = 6.083 ms, Q3 = 6.209 ms, Max = 6.447 ms
 IQR = 0.262 ms, LowerFence = 5.555 ms, UpperFence = 6.602 ms
 ConfidenceInterval = [5.974 ms; 6.215 ms] (CI 99.9%), Margin = 0.121 ms (1.98% of Mean)
 Skewness = 0.15, Kurtosis = 2.21, MValue = 2
+
 -------------------- Histogram --------------------
 [5.723 ms ; 5.890 ms) | @@@
 [5.890 ms ; 6.069 ms) | @@@@@@@@@
@@ -154,6 +160,7 @@ Min = 7.258 s, Q1 = 12.793 s, Median = 16.215 s, Q3 = 16.598 s, Max = 21.659 s
 IQR = 3.805 s, LowerFence = 7.086 s, UpperFence = 22.304 s
 ConfidenceInterval = [11.408 s; 17.056 s] (CI 99.9%), Margin = 2.824 s (19.84% of Mean)
 Skewness = -0.56, Kurtosis = 2.12, MValue = 3
+
 -------------------- Histogram --------------------
 [ 6.053 s ;  9.589 s) | @@@@@@@
 [ 9.589 s ; 11.141 s) |
@@ -171,6 +178,7 @@ Min = 6.185 s, Q1 = 6.425 s, Median = 6.770 s, Q3 = 6.914 s, Max = 7.287 s
 IQR = 0.489 s, LowerFence = 5.692 s, UpperFence = 7.647 s
 ConfidenceInterval = [6.502 s; 6.931 s] (CI 99.9%), Margin = 0.215 s (3.19% of Mean)
 Skewness = -0.13, Kurtosis = 1.89, MValue = 2.77
+
 -------------------- Histogram --------------------
 [6.177 s ; 6.449 s) | @@@@@@@@@
 [6.449 s ; 6.733 s) | @@@@
@@ -186,6 +194,7 @@ Min = 7.929 s, Q1 = 20.534 s, Median = 32.434 s, Q3 = 51.746 s, Max = 59.714 s
 IQR = 31.212 s, LowerFence = -26.283 s, UpperFence = 98.563 s
 ConfidenceInterval = [23.176 s; 46.315 s] (CI 99.9%), Margin = 11.570 s (33.30% of Mean)
 Skewness = 0.01, Kurtosis = 1.5, MValue = 3
+
 -------------------- Histogram --------------------
 [ 0.614 s ; 16.791 s) | @@@@@
 [16.791 s ; 31.420 s) | @@@@@@@@@@
@@ -201,6 +210,7 @@ Min = 8.070 s, Q1 = 8.264 s, Median = 8.335 s, Q3 = 8.515 s, Max = 8.655 s
 IQR = 0.251 s, LowerFence = 7.887 s, UpperFence = 8.892 s
 ConfidenceInterval = [8.203 s; 8.529 s] (CI 99.9%), Margin = 0.163 s (1.94% of Mean)
 Skewness = 0.06, Kurtosis = 1.8, MValue = 2
+
 -------------------- Histogram --------------------
 [7.983 s ; 8.183 s) | @@
 [8.183 s ; 8.358 s) | @@@@@@@@@
@@ -235,6 +245,7 @@ Min = 14.613 s, Q1 = 23.104 s, Median = 25.082 s, Q3 = 26.042 s, Max = 27.686 s
 IQR = 2.938 s, LowerFence = 18.697 s, UpperFence = 30.449 s
 ConfidenceInterval = [21.574 s; 26.105 s] (CI 99.9%), Margin = 2.265 s (9.50% of Mean)
 Skewness = -1.44, Kurtosis = 4.15, MValue = 2.5
+
 -------------------- Histogram --------------------
 [13.181 s ; 16.161 s) | @@
 [16.161 s ; 19.219 s) | @
@@ -252,6 +263,7 @@ Min = 13.726 s, Q1 = 13.931 s, Median = 13.998 s, Q3 = 14.325 s, Max = 14.455 s
 IQR = 0.393 s, LowerFence = 13.341 s, UpperFence = 14.915 s
 ConfidenceInterval = [13.815 s; 14.361 s] (CI 99.9%), Margin = 0.273 s (1.94% of Mean)
 Skewness = 0.25, Kurtosis = 1.46, MValue = 2
+
 -------------------- Histogram --------------------
 [13.590 s ; 14.019 s) | @@@@@@@@@
 [14.019 s ; 14.478 s) | @@@@@@
@@ -265,6 +277,7 @@ Min = 5.170 s, Q1 = 15.441 s, Median = 23.212 s, Q3 = 51.885 s, Max = 60.232 s
 IQR = 36.444 s, LowerFence = -39.225 s, UpperFence = 106.550 s
 ConfidenceInterval = [17.919 s; 43.623 s] (CI 99.9%), Margin = 12.852 s (41.77% of Mean)
 Skewness = 0.31, Kurtosis = 1.43, MValue = 2.67
+
 -------------------- Histogram --------------------
 [ 5.056 s ; 21.306 s) | @@@@@@@@@@@@@@@
 [21.306 s ; 41.244 s) | @@@@@
@@ -279,6 +292,7 @@ Min = 5.358 s, Q1 = 5.406 s, Median = 5.423 s, Q3 = 5.489 s, Max = 5.563 s
 IQR = 0.083 s, LowerFence = 5.281 s, UpperFence = 5.614 s
 ConfidenceInterval = [5.381 s; 5.506 s] (CI 99.9%), Margin = 0.063 s (1.15% of Mean)
 Skewness = 0.46, Kurtosis = 1.98, MValue = 2
+
 -------------------- Histogram --------------------
 [5.352 s ; 5.594 s) | @@@@@@@@@@@@@@@
 ---------------------------------------------------
@@ -291,6 +305,7 @@ Min = 8.958 s, Q1 = 16.550 s, Median = 17.407 s, Q3 = 17.842 s, Max = 18.213 s
 IQR = 1.292 s, LowerFence = 14.612 s, UpperFence = 19.780 s
 ConfidenceInterval = [14.220 s; 18.038 s] (CI 99.9%), Margin = 1.909 s (11.84% of Mean)
 Skewness = -1.51, Kurtosis = 3.71, MValue = 2
+
 -------------------- Histogram --------------------
 [ 8.816 s ; 11.230 s) | @@@@
 [11.230 s ; 13.823 s) | @@
@@ -306,6 +321,7 @@ Min = 8.363 s, Q1 = 8.517 s, Median = 8.589 s, Q3 = 8.855 s, Max = 8.939 s
 IQR = 0.339 s, LowerFence = 8.009 s, UpperFence = 9.363 s
 ConfidenceInterval = [8.491 s; 8.823 s] (CI 99.9%), Margin = 0.166 s (1.92% of Mean)
 Skewness = 0.26, Kurtosis = 1.43, MValue = 2
+
 -------------------- Histogram --------------------
 [8.272 s ; 8.453 s) | @
 [8.453 s ; 8.635 s) | @@@@@@@@@@
@@ -320,6 +336,7 @@ Min = 5.771 s, Q1 = 16.059 s, Median = 24.009 s, Q3 = 50.338 s, Max = 61.805 s
 IQR = 34.279 s, LowerFence = -35.359 s, UpperFence = 101.756 s
 ConfidenceInterval = [18.548 s; 43.707 s] (CI 99.9%), Margin = 12.580 s (40.41% of Mean)
 Skewness = 0.31, Kurtosis = 1.49, MValue = 3
+
 -------------------- Histogram --------------------
 [ 4.931 s ; 20.838 s) | @@@@@@@@@@@@@@
 [20.838 s ; 37.584 s) | @@@@@
@@ -335,6 +352,7 @@ Min = 5.288 s, Q1 = 5.374 s, Median = 5.421 s, Q3 = 5.480 s, Max = 5.515 s
 IQR = 0.106 s, LowerFence = 5.216 s, UpperFence = 5.638 s
 ConfidenceInterval = [5.327 s; 5.502 s] (CI 99.9%), Margin = 0.087 s (1.61% of Mean)
 Skewness = -0.36, Kurtosis = 1.69, MValue = 2
+
 -------------------- Histogram --------------------
 [5.246 s ; 5.530 s) | @@@@@@@@@@@@@@
 ---------------------------------------------------
