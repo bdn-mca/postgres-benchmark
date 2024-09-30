@@ -1,40 +1,59 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
 namespace PostgreSqlBenchmark;
 
 [WarmupCount(0)]
-public class SmallBenchmarkEfService
+public class BigOnLargeTableBenchmarkEfService
 {
     [ParamsAllValues]
     public DatabaseType BenchmarkDbType { get; set; }
 
-    [Benchmark]
-    public async Task EfCoreSingleAdd()
+    [Params(3_000_001, 10_000_001)]
+    public int InitialTableSize { get; set; }
+
+    [Params(1000, 20_000)]
+    public int BulkAddSize { get; set; }
+
+    internal List<BenchmarkDbEntity> Entities { get; set; } = [];
+
+    [IterationSetup]
+    public void CleanAndPopulateEntities()
     {
-        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
-        for (int i = 1; i < 101; i++)
+        Entities.Clear();
+        for (int i = 1; i <= BulkAddSize; i++)
         {
-            ctx.BenchmarkDbEntities.Add(new BenchmarkDbEntity
+            Entities.Add(new BenchmarkDbEntity
             {
                 Uid = Guid.NewGuid(),
                 Id = i,
                 CreatedOn = DateTime.UtcNow,
                 DeletedOn = null,
-                Name = $"{BenchmarkDbType.ToString()}-SingleAdd",
-                Type = 3,
+                Name = BenchmarkDbType.ToString(),
+                Type = 1,
                 Properties = null,
             });
         }
-        await ctx.SaveChangesAsync();
     }
 
     [Benchmark]
-    public async Task EfCoreRangeAdd()
+    public async Task EfCoreBulkAdd()
+    {
+        using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
+        await ctx.BulkInsertAsync(Entities,
+            new BulkConfig
+            {
+                BatchSize = BulkAddSize + 1000
+            });
+    }
+
+    [GlobalSetup]
+    public async Task PopulateTable()
     {
         List<BenchmarkDbEntity> entities = [];
-        for (int i = 1; i < 101; i++)
+        for (int i = 1; i < InitialTableSize; i++)
         {
             entities.Add(new BenchmarkDbEntity
             {
@@ -42,14 +61,17 @@ public class SmallBenchmarkEfService
                 Id = i,
                 CreatedOn = DateTime.UtcNow,
                 DeletedOn = null,
-                Name = $"{BenchmarkDbType.ToString()}-RangeAdd",
-                Type = 4,
+                Name = BenchmarkDbType.ToString(),
+                Type = 1,
                 Properties = null,
             });
         }
         using BaseDbContext ctx = DbContextFactory.GetBenchmarkDbContext(BenchmarkDbType);
-        ctx.BenchmarkDbEntities.AddRange(entities);
-        await ctx.SaveChangesAsync();
+        await ctx.BulkInsertAsync(entities,
+            new BulkConfig
+            {
+                BatchSize = 200_000
+            });
     }
 
     [GlobalCleanup]

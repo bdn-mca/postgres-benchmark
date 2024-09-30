@@ -15,7 +15,7 @@ public class BulkBenchmarkEfService
     [ParamsAllValues]
     public bool CleanupTable { get; set; }
 
-    [Params(2000, 50000)]
+    [Params(2000, 50000, 200_000)]
     public int BatchSize { get; set; }
 
     internal List<BenchmarkDbEntity> Entities { get; set; } = [];

@@ -1,5 +1,5 @@
 # MsSql - PostgreSql benchmark
-Benchmarking PostgreSql vs. MS SQL performance with EF Core and Stored procedures.
+Benchmarking PostgreSql 16 vs. MS SQL 2022 performance with EF Core and Stored procedures.
 
 # Getting started
 - Manually create the tables and stored procedures
@@ -398,3 +398,244 @@ Skewness = -0.36, Kurtosis = 1.69, MValue = 2
 BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (14.61 s..17.53 s)
 BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 6 outliers were detected (8.96 s..13.09 s)
 BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (5.68 s, 5.68 s)
+
+## Small inserts on already large table
+Table consisting of millions of rows receives non-bulk small inserts of 100s of items.
+- `InitialTableSize` - number of rows in the table before the benchmark of inserts start
+
+| Method         | InitialTableSize | BenchmarkDbType | Mean     | Error     | StdDev    |
+|--------------- |----------------- |---------------- |---------:|----------:|----------:|
+| EfCoreRangeAdd | 3000001          | MsSql           | 7.364 ms | 0.1278 ms | 0.1195 ms |
+| EfCoreRangeAdd | 3000001          | PostgreSql      | 5.615 ms | 0.0790 ms | 0.0739 ms |
+| EfCoreRangeAdd | 10000001         | MsSql           | 7.599 ms | 0.1425 ms | 0.3677 ms |
+| EfCoreRangeAdd | 10000001         | PostgreSql      | 7.194 ms | 0.1040 ms | 0.0973 ms |
+
+#### [InitialTableSize=3.000.001, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 7.364 ms, StdErr = 0.031 ms (0.42%), N = 15, StdDev = 0.120 ms
+Min = 7.082 ms, Q1 = 7.301 ms, Median = 7.371 ms, Q3 = 7.452 ms, Max = 7.528 ms
+IQR = 0.151 ms, LowerFence = 7.075 ms, UpperFence = 7.679 ms
+ConfidenceInterval = [7.236 ms; 7.492 ms] (CI 99.9%), Margin = 0.128 ms (1.74% of Mean)
+Skewness = -0.7, Kurtosis = 2.7, MValue = 2
+```
+-------------------- Histogram --------------------
+[7.019 ms ; 7.208 ms) | @
+[7.208 ms ; 7.592 ms) | @@@@@@@@@@@@@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=3.000.001, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 5.615 ms, StdErr = 0.019 ms (0.34%), N = 15, StdDev = 0.074 ms
+Min = 5.485 ms, Q1 = 5.557 ms, Median = 5.612 ms, Q3 = 5.668 ms, Max = 5.746 ms
+IQR = 0.111 ms, LowerFence = 5.392 ms, UpperFence = 5.834 ms
+ConfidenceInterval = [5.536 ms; 5.694 ms] (CI 99.9%), Margin = 0.079 ms (1.41% of Mean)
+Skewness = -0.06, Kurtosis = 1.82, MValue = 2
+```
+-------------------- Histogram --------------------
+[5.446 ms ; 5.582 ms) | @@@@@
+[5.582 ms ; 5.786 ms) | @@@@@@@@@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10.000.001, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 7.599 ms, StdErr = 0.042 ms (0.55%), N = 78, StdDev = 0.368 ms
+Min = 6.795 ms, Q1 = 7.373 ms, Median = 7.522 ms, Q3 = 7.699 ms, Max = 8.676 ms
+IQR = 0.326 ms, LowerFence = 6.883 ms, UpperFence = 8.189 ms
+ConfidenceInterval = [7.456 ms; 7.741 ms] (CI 99.9%), Margin = 0.142 ms (1.87% of Mean)
+Skewness = 0.97, Kurtosis = 3.95, MValue = 2
+```
+-------------------- Histogram --------------------
+[6.682 ms ; 6.943 ms) | @
+[6.943 ms ; 7.169 ms) | @@@@@
+[7.169 ms ; 7.440 ms) | @@@@@@@@@@@@@@@@@@
+[7.440 ms ; 7.666 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[7.666 ms ; 7.915 ms) | @@@@@@@@@
+[7.915 ms ; 8.106 ms) | @@@
+[8.106 ms ; 8.282 ms) | @@
+[8.282 ms ; 8.508 ms) | @@@@@
+[8.508 ms ; 8.749 ms) | @@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10.000.001, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 7.194 ms, StdErr = 0.025 ms (0.35%), N = 15, StdDev = 0.097 ms
+Min = 7.086 ms, Q1 = 7.111 ms, Median = 7.169 ms, Q3 = 7.250 ms, Max = 7.399 ms
+IQR = 0.138 ms, LowerFence = 6.904 ms, UpperFence = 7.457 ms
+ConfidenceInterval = [7.090 ms; 7.298 ms] (CI 99.9%), Margin = 0.104 ms (1.45% of Mean)
+Skewness = 0.59, Kurtosis = 2.04, MValue = 2
+```
+-------------------- Histogram --------------------
+[7.056 ms ; 7.451 ms) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+```
+
+#### Outliers
+- SmallOnLargeTableBenchmarkEfService.EfCoreRangeAdd: WarmupCount=0 -> 13 outliers were removed (8.87 ms..14.26 ms)
+
+## Bulk inserts on already large table
+Table consisting of millions of rows receives bulk inserts of 1000s of items.
+- `InitialTableSize` - number of rows in the table before the benchmark of inserts start
+- `BulkAddSize` - number of rows added in each iteration in bulk
+
+| Method        | InitialTableSize | BulkAddSize | BenchmarkDbType | Mean       | Error      | StdDev     | Median     |
+|-------------- |----------------- |------------ |---------------- |-----------:|-----------:|-----------:|-----------:|
+| EfCoreBulkAdd | 3000001          | 1000        | MsSql           |  19.321 ms |  0.3846 ms |  0.5001 ms |  19.261 ms |
+| EfCoreBulkAdd | 3000001          | 1000        | PostgreSql      |   7.281 ms |  0.1450 ms |  0.4114 ms |   7.204 ms |
+| EfCoreBulkAdd | 3000001          | 20000       | MsSql           | 195.782 ms |  3.7992 ms |  4.6657 ms | 194.447 ms |
+| EfCoreBulkAdd | 3000001          | 20000       | PostgreSql      | 124.061 ms |  9.3142 ms | 27.4632 ms | 118.442 ms |
+| EfCoreBulkAdd | 10000001         | 1000        | MsSql           |  19.548 ms |  0.3695 ms |  0.5416 ms |  19.461 ms |
+| EfCoreBulkAdd | 10000001         | 1000        | PostgreSql      |  17.669 ms |  0.3505 ms |  0.6231 ms |  17.602 ms |
+| EfCoreBulkAdd | 10000001         | 20000       | MsSql           | 233.629 ms | 13.3769 ms | 38.8087 ms | 205.016 ms |
+| EfCoreBulkAdd | 10000001         | 20000       | PostgreSql      | 284.598 ms |  5.6219 ms |  5.5215 ms | 284.365 ms |
+
+#### [InitialTableSize=3000001, BulkAddSize=1000, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 19.321 ms, StdErr = 0.102 ms (0.53%), N = 24, StdDev = 0.500 ms
+Min = 18.603 ms, Q1 = 18.971 ms, Median = 19.261 ms, Q3 = 19.634 ms, Max = 20.464 ms
+IQR = 0.662 ms, LowerFence = 17.978 ms, UpperFence = 20.627 ms
+ConfidenceInterval = [18.936 ms; 19.705 ms] (CI 99.9%), Margin = 0.385 ms (1.99% of Mean)
+Skewness = 0.62, Kurtosis = 2.46, MValue = 2
+```
+-------------------- Histogram --------------------
+[18.375 ms ; 18.824 ms) | @@
+[18.824 ms ; 19.279 ms) | @@@@@@@@@@@
+[19.279 ms ; 19.963 ms) | @@@@@@@@@
+[19.963 ms ; 20.692 ms) | @@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=3000001, BulkAddSize=1000, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 7.281 ms, StdErr = 0.043 ms (0.59%), N = 93, StdDev = 0.411 ms
+Min = 6.485 ms, Q1 = 6.948 ms, Median = 7.204 ms, Q3 = 7.533 ms, Max = 8.271 ms
+IQR = 0.585 ms, LowerFence = 6.070 ms, UpperFence = 8.411 ms
+ConfidenceInterval = [7.136 ms; 7.426 ms] (CI 99.9%), Margin = 0.145 ms (1.99% of Mean)
+Skewness = 0.49, Kurtosis = 2.4, MValue = 2.54
+```
+-------------------- Histogram --------------------
+[6.422 ms ; 6.673 ms) | @@@
+[6.673 ms ; 6.865 ms) | @@@@@@@@
+[6.865 ms ; 7.104 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@
+[7.104 ms ; 7.350 ms) | @@@@@@@@@@@@@@@@@@@@@@
+[7.350 ms ; 7.655 ms) | @@@@@@@@@@@@@@@@
+[7.655 ms ; 7.897 ms) | @@@@@
+[7.897 ms ; 8.135 ms) | @@@@@@@@@@@@
+[8.135 ms ; 8.390 ms) | @
+---------------------------------------------------
+```
+
+#### [InitialTableSize=3000001, BulkAddSize=20000, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 195.782 ms, StdErr = 0.995 ms (0.51%), N = 22, StdDev = 4.666 ms
+Min = 189.669 ms, Q1 = 192.082 ms, Median = 194.447 ms, Q3 = 199.017 ms, Max = 206.446 ms
+IQR = 6.935 ms, LowerFence = 181.680 ms, UpperFence = 209.419 ms
+ConfidenceInterval = [191.983 ms; 199.581 ms] (CI 99.9%), Margin = 3.799 ms (1.94% of Mean)
+Skewness = 0.58, Kurtosis = 2.22, MValue = 2
+```
+-------------------- Histogram --------------------
+[189.456 ms ; 193.827 ms) | @@@@@@@@@@
+[193.827 ms ; 200.695 ms) | @@@@@@@@@
+[200.695 ms ; 206.499 ms) | @@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=3000001, BulkAddSize=20000, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 124.061 ms, StdErr = 2.746 ms (2.21%), N = 100, StdDev = 27.463 ms
+Min = 76.796 ms, Q1 = 99.442 ms, Median = 118.442 ms, Q3 = 146.410 ms, Max = 180.275 ms
+IQR = 46.968 ms, LowerFence = 28.990 ms, UpperFence = 216.863 ms
+ConfidenceInterval = [114.747 ms; 133.376 ms] (CI 99.9%), Margin = 9.314 ms (7.51% of Mean)
+Skewness = 0.31, Kurtosis = 1.88, MValue = 2.83
+```
+-------------------- Histogram --------------------
+[ 69.031 ms ;  78.380 ms) | @
+[ 78.380 ms ;  93.767 ms) | @@@@@@@@@@
+[ 93.767 ms ; 109.298 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@
+[109.298 ms ; 126.281 ms) | @@@@@@@@@@@@@@@@@@@@@
+[126.281 ms ; 138.697 ms) | @@@@@@@
+[138.697 ms ; 154.228 ms) | @@@@@@@@@@@@@@@@
+[154.228 ms ; 171.206 ms) | @@@@@@@@@@@@@@@@
+[171.206 ms ; 188.040 ms) | @@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10000001, BulkAddSize=1000, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 19.548 ms, StdErr = 0.101 ms (0.51%), N = 29, StdDev = 0.542 ms
+Min = 18.865 ms, Q1 = 19.202 ms, Median = 19.461 ms, Q3 = 19.777 ms, Max = 21.554 ms
+IQR = 0.575 ms, LowerFence = 18.340 ms, UpperFence = 20.640 ms
+ConfidenceInterval = [19.179 ms; 19.918 ms] (CI 99.9%), Margin = 0.370 ms (1.89% of Mean)
+Skewness = 1.66, Kurtosis = 7.02, MValue = 2
+```
+-------------------- Histogram --------------------
+[18.633 ms ; 19.132 ms) | @@@@
+[19.132 ms ; 19.594 ms) | @@@@@@@@@@@@@@@
+[19.594 ms ; 20.186 ms) | @@@@@@@@
+[20.186 ms ; 20.937 ms) | @
+[20.937 ms ; 21.785 ms) | @
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10000001, BulkAddSize=1000, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 17.669 ms, StdErr = 0.099 ms (0.56%), N = 40, StdDev = 0.623 ms
+Min = 15.958 ms, Q1 = 17.340 ms, Median = 17.602 ms, Q3 = 18.057 ms, Max = 19.044 ms
+IQR = 0.716 ms, LowerFence = 16.266 ms, UpperFence = 19.132 ms
+ConfidenceInterval = [17.318 ms; 18.019 ms] (CI 99.9%), Margin = 0.351 ms (1.98% of Mean)
+Skewness = -0.07, Kurtosis = 3.26, MValue = 2
+```
+-------------------- Histogram --------------------
+[15.719 ms ; 16.197 ms) | @
+[16.197 ms ; 16.679 ms) |
+[16.679 ms ; 17.260 ms) | @@@@@@
+[17.260 ms ; 17.738 ms) | @@@@@@@@@@@@@@@@@@@
+[17.738 ms ; 18.361 ms) | @@@@@@@@@@
+[18.361 ms ; 19.060 ms) | @@@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10000001, BulkAddSize=20000, BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 233.629 ms, StdErr = 3.940 ms (1.69%), N = 97, StdDev = 38.809 ms
+Min = 196.242 ms, Q1 = 200.885 ms, Median = 205.016 ms, Q3 = 269.738 ms, Max = 319.568 ms
+IQR = 68.853 ms, LowerFence = 97.606 ms, UpperFence = 373.017 ms
+ConfidenceInterval = [220.252 ms; 247.005 ms] (CI 99.9%), Margin = 13.377 ms (5.73% of Mean)
+Skewness = 0.61, Kurtosis = 1.82, MValue = 2.8
+```
+-------------------- Histogram --------------------
+[194.198 ms ; 216.370 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[216.370 ms ; 233.896 ms) |
+[233.896 ms ; 255.195 ms) | @@@@@@
+[255.195 ms ; 277.367 ms) | @@@@@@@@@@@@@@@@@@@@@@
+[277.367 ms ; 304.854 ms) | @@@@@@@@@@
+[304.854 ms ; 330.654 ms) | @@@@
+---------------------------------------------------
+```
+
+#### [InitialTableSize=10000001, BulkAddSize=20000, BenchmarkDbType=PostgreSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 284.598 ms, StdErr = 1.380 ms (0.49%), N = 16, StdDev = 5.521 ms
+Min = 276.250 ms, Q1 = 280.463 ms, Median = 284.365 ms, Q3 = 287.949 ms, Max = 297.599 ms
+IQR = 7.486 ms, LowerFence = 269.234 ms, UpperFence = 299.178 ms
+ConfidenceInterval = [278.976 ms; 290.220 ms] (CI 99.9%), Margin = 5.622 ms (1.98% of Mean)
+Skewness = 0.55, Kurtosis = 2.67, MValue = 2
+```
+-------------------- Histogram --------------------
+[275.633 ms ; 281.385 ms) | @@@@@@
+[281.385 ms ; 288.584 ms) | @@@@@@@@
+[288.584 ms ; 294.462 ms) | @
+[294.462 ms ; 300.475 ms) | @
+---------------------------------------------------
+```
+
+#### Outliers
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (22.12 ms, 65.75 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 3 outliers were removed (9.53 ms..52.79 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 1 outlier  was  removed (239.35 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 8 outliers were removed (21.86 ms..89.90 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed, 3 outliers were detected (15.96 ms, 19.91 ms, 63.75 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 3 outliers were removed (698.70 ms..891.15 ms)
+- BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 4 outliers were removed (318.10 ms..348.67 ms)
