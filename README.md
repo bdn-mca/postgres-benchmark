@@ -1,5 +1,6 @@
 # MsSql - PostgreSql benchmark
-Benchmarking PostgreSql 16 vs. MS SQL 2022 performance with EF Core and Stored procedures.
+Benchmarking `PostgreSql 16` vs. `MS SQL 2022` performance with EF Core and Stored procedures.
+Both database servers installed and benchmarks run on local machine. Both servers with default settings.
 
 # Getting started
 - Manually create the tables and stored procedures
@@ -247,157 +248,213 @@ Inserting 1.000.000 items with EF Core, using EF.BulkExtensions.
 - `CleanupTable` tells if the data in the `benchmark` table was deleted (for PG additionally vacuumed) after each iteration.
 - `BatchSize` is the EFCore.Extensions BatchSize property - meaning the insert is done multiple times with the determined batch number of items.
 
-| Method     | BatchSize | BenchmarkDbType | CleanupTable | Mean     | Error     | StdDev    | Median   |
-|----------- |---------- |---------------- |------------- |---------:|----------:|----------:|---------:|
-| EfCoreBulk | 2000      | MsSql           | False        | 23.840 s |  2.2654 s |  3.3907 s | 25.082 s |
-| EfCoreBulk | 2000      | MsSql           | True         | 14.088 s |  0.2732 s |  0.2556 s | 13.998 s |
-| EfCoreBulk | 2000      | PostgreSql      | False        | 30.771 s | 12.8518 s | 19.2359 s | 23.212 s |
-| EfCoreBulk | 2000      | PostgreSql      | True         |  5.444 s |  0.0626 s |  0.0586 s |  5.423 s |
-| EfCoreBulk | 50000     | MsSql           | False        | 16.129 s |  1.9089 s |  2.8572 s | 17.407 s |
-| EfCoreBulk | 50000     | MsSql           | True         |  8.657 s |  0.1659 s |  0.1844 s |  8.589 s |
-| EfCoreBulk | 50000     | PostgreSql      | False        | 31.127 s | 12.5795 s | 18.8285 s | 24.009 s |
-| EfCoreBulk | 50000     | PostgreSql      | True         |  5.415 s |  0.0872 s |  0.0773 s |  5.421 s |
+| Method     | BatchSize | BenchmarkDbType | CleanupTable | Mean     | Error    | StdDev   |
+|----------- |---------- |---------------- |------------- |---------:|---------:|---------:|
+| EfCoreBulk | 2000      | MsSql           | False        | 21.138 s | 2.2308 s | 3.3390 s |
+| EfCoreBulk | 2000      | MsSql           | True         | 14.779 s | 0.2862 s | 0.3296 s |
+| EfCoreBulk | 2000      | PostgreSql      | False        | 13.100 s | 2.2829 s | 3.4169 s |
+| EfCoreBulk | 2000      | PostgreSql      | True         |  3.204 s | 0.0588 s | 0.0491 s |
+| EfCoreBulk | 50000     | MsSql           | False        | 14.759 s | 1.9155 s | 2.8670 s |
+| EfCoreBulk | 50000     | MsSql           | True         |  8.479 s | 0.1435 s | 0.1342 s |
+| EfCoreBulk | 50000     | PostgreSql      | False        | 13.228 s | 2.3067 s | 3.4525 s |
+| EfCoreBulk | 50000     | PostgreSql      | True         |  3.112 s | 0.0198 s | 0.0185 s |
+| EfCoreBulk | 200000    | MsSql           | False        | 12.975 s | 1.9926 s | 2.9825 s |
+| EfCoreBulk | 200000    | MsSql           | True         |  7.851 s | 0.0795 s | 0.0664 s |
+| EfCoreBulk | 200000    | PostgreSql      | False        | 13.251 s | 2.3026 s | 3.4464 s |
+| EfCoreBulk | 200000    | PostgreSql      | True         |  3.188 s | 0.0471 s | 0.0441 s |
 
-#### Bulk EF Core [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=False]
-
+#### [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=False]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 23.840 s, StdErr = 0.619 s (2.60%), N = 30, StdDev = 3.391 s
-Min = 14.613 s, Q1 = 23.104 s, Median = 25.082 s, Q3 = 26.042 s, Max = 27.686 s
-IQR = 2.938 s, LowerFence = 18.697 s, UpperFence = 30.449 s
-ConfidenceInterval = [21.574 s; 26.105 s] (CI 99.9%), Margin = 2.265 s (9.50% of Mean)
-Skewness = -1.44, Kurtosis = 4.15, MValue = 2.5
-
+Mean = 21.138 s, StdErr = 0.610 s (2.88%), N = 30, StdDev = 3.339 s
+Min = 15.595 s, Q1 = 17.824 s, Median = 21.137 s, Q3 = 24.376 s, Max = 25.490 s
+IQR = 6.552 s, LowerFence = 7.995 s, UpperFence = 34.205 s
+ConfidenceInterval = [18.907 s; 23.369 s] (CI 99.9%), Margin = 2.231 s (10.55% of Mean)
+Skewness = -0.14, Kurtosis = 1.41, MValue = 2.92
 ```
 -------------------- Histogram --------------------
-[13.181 s ; 16.161 s) | @@
-[16.161 s ; 19.219 s) | @
-[19.219 s ; 22.084 s) | @@@@
-[22.084 s ; 23.826 s) | @
-[23.826 s ; 26.691 s) | @@@@@@@@@@@@@@@@@@@@@
-[26.691 s ; 29.118 s) | @
+[14.184 s ; 17.051 s) | @@@
+[17.051 s ; 19.872 s) | @@@@@@@@@@
+[19.872 s ; 23.001 s) | @@@@
+[23.001 s ; 25.822 s) | @@@@@@@@@@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=True]
-
+#### [BatchSize=2000, BenchmarkDbType=MsSql, CleanupTable=True]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 14.088 s, StdErr = 0.066 s (0.47%), N = 15, StdDev = 0.256 s
-Min = 13.726 s, Q1 = 13.931 s, Median = 13.998 s, Q3 = 14.325 s, Max = 14.455 s
-IQR = 0.393 s, LowerFence = 13.341 s, UpperFence = 14.915 s
-ConfidenceInterval = [13.815 s; 14.361 s] (CI 99.9%), Margin = 0.273 s (1.94% of Mean)
-Skewness = 0.25, Kurtosis = 1.46, MValue = 2
-
+Mean = 14.779 s, StdErr = 0.074 s (0.50%), N = 20, StdDev = 0.330 s
+Min = 14.090 s, Q1 = 14.633 s, Median = 14.770 s, Q3 = 15.040 s, Max = 15.223 s
+IQR = 0.407 s, LowerFence = 14.023 s, UpperFence = 15.650 s
+ConfidenceInterval = [14.493 s; 15.065 s] (CI 99.9%), Margin = 0.286 s (1.94% of Mean)
+Skewness = -0.6, Kurtosis = 2.39, MValue = 2
 ```
 -------------------- Histogram --------------------
-[13.590 s ; 14.019 s) | @@@@@@@@@
-[14.019 s ; 14.478 s) | @@@@@@
+[14.042 s ; 14.361 s) | @@@
+[14.361 s ; 14.711 s) | @@@
+[14.711 s ; 15.030 s) | @@@@@@@@@
+[15.030 s ; 15.383 s) | @@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=False]
-
+#### [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=False]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 30.771 s, StdErr = 3.512 s (11.41%), N = 30, StdDev = 19.236 s
-Min = 5.170 s, Q1 = 15.441 s, Median = 23.212 s, Q3 = 51.885 s, Max = 60.232 s
-IQR = 36.444 s, LowerFence = -39.225 s, UpperFence = 106.550 s
-ConfidenceInterval = [17.919 s; 43.623 s] (CI 99.9%), Margin = 12.852 s (41.77% of Mean)
-Skewness = 0.31, Kurtosis = 1.43, MValue = 2.67
-
+Mean = 13.100 s, StdErr = 0.624 s (4.76%), N = 30, StdDev = 3.417 s
+Min = 3.233 s, Q1 = 12.691 s, Median = 13.806 s, Q3 = 15.425 s, Max = 16.527 s
+IQR = 2.734 s, LowerFence = 8.590 s, UpperFence = 19.525 s
+ConfidenceInterval = [10.817 s; 15.383 s] (CI 99.9%), Margin = 2.283 s (17.43% of Mean)
+Skewness = -1.58, Kurtosis = 4.85, MValue = 2.33
 ```
 -------------------- Histogram --------------------
-[ 5.056 s ; 21.306 s) | @@@@@@@@@@@@@@@
-[21.306 s ; 41.244 s) | @@@@@
-[41.244 s ; 61.794 s) | @@@@@@@@@@
+[ 1.790 s ;  4.901 s) | @@
+[ 4.901 s ;  8.205 s) | @
+[ 8.205 s ; 11.091 s) | @@
+[11.091 s ; 12.585 s) | @
+[12.585 s ; 15.472 s) | @@@@@@@@@@@@@@@@@
+[15.472 s ; 17.970 s) | @@@@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=True]
-
+#### [BatchSize=2000, BenchmarkDbType=PostgreSql, CleanupTable=True]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 5.444 s, StdErr = 0.015 s (0.28%), N = 15, StdDev = 0.059 s
-Min = 5.358 s, Q1 = 5.406 s, Median = 5.423 s, Q3 = 5.489 s, Max = 5.563 s
-IQR = 0.083 s, LowerFence = 5.281 s, UpperFence = 5.614 s
-ConfidenceInterval = [5.381 s; 5.506 s] (CI 99.9%), Margin = 0.063 s (1.15% of Mean)
-Skewness = 0.46, Kurtosis = 1.98, MValue = 2
-
+Mean = 3.204 s, StdErr = 0.014 s (0.42%), N = 13, StdDev = 0.049 s
+Min = 3.114 s, Q1 = 3.187 s, Median = 3.209 s, Q3 = 3.217 s, Max = 3.297 s
+IQR = 0.030 s, LowerFence = 3.142 s, UpperFence = 3.261 s
+ConfidenceInterval = [3.145 s; 3.263 s] (CI 99.9%), Margin = 0.059 s (1.83% of Mean)
+Skewness = 0.06, Kurtosis = 2.45, MValue = 2
 ```
 -------------------- Histogram --------------------
-[5.352 s ; 5.594 s) | @@@@@@@@@@@@@@@
+[3.103 s ; 3.172 s) | @@@
+[3.172 s ; 3.319 s) | @@@@@@@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=False]
-
+#### [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=False]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 16.129 s, StdErr = 0.522 s (3.23%), N = 30, StdDev = 2.857 s
-Min = 8.958 s, Q1 = 16.550 s, Median = 17.407 s, Q3 = 17.842 s, Max = 18.213 s
-IQR = 1.292 s, LowerFence = 14.612 s, UpperFence = 19.780 s
-ConfidenceInterval = [14.220 s; 18.038 s] (CI 99.9%), Margin = 1.909 s (11.84% of Mean)
-Skewness = -1.51, Kurtosis = 3.71, MValue = 2
-
+Mean = 14.759 s, StdErr = 0.523 s (3.55%), N = 30, StdDev = 2.867 s
+Min = 8.980 s, Q1 = 12.280 s, Median = 16.138 s, Q3 = 16.933 s, Max = 17.494 s
+IQR = 4.654 s, LowerFence = 5.300 s, UpperFence = 23.914 s
+ConfidenceInterval = [12.844 s; 16.675 s] (CI 99.9%), Margin = 1.915 s (12.98% of Mean)
+Skewness = -0.85, Kurtosis = 2.08, MValue = 2.95
 ```
 -------------------- Histogram --------------------
-[ 8.816 s ; 11.230 s) | @@@@
-[11.230 s ; 13.823 s) | @@
-[13.823 s ; 15.925 s) |
-[15.925 s ; 18.339 s) | @@@@@@@@@@@@@@@@@@@@@@@@
+[ 8.677 s ; 11.099 s) | @@@@@@
+[11.099 s ; 12.033 s) |
+[12.033 s ; 14.455 s) | @@@@
+[14.455 s ; 15.388 s) | @
+[15.388 s ; 17.810 s) | @@@@@@@@@@@@@@@@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=True]
-
+#### [BatchSize=50000, BenchmarkDbType=MsSql, CleanupTable=True]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 8.657 s, StdErr = 0.042 s (0.49%), N = 19, StdDev = 0.184 s
-Min = 8.363 s, Q1 = 8.517 s, Median = 8.589 s, Q3 = 8.855 s, Max = 8.939 s
-IQR = 0.339 s, LowerFence = 8.009 s, UpperFence = 9.363 s
-ConfidenceInterval = [8.491 s; 8.823 s] (CI 99.9%), Margin = 0.166 s (1.92% of Mean)
-Skewness = 0.26, Kurtosis = 1.43, MValue = 2
-
+Mean = 8.479 s, StdErr = 0.035 s (0.41%), N = 15, StdDev = 0.134 s
+Min = 8.274 s, Q1 = 8.331 s, Median = 8.543 s, Q3 = 8.589 s, Max = 8.617 s
+IQR = 0.258 s, LowerFence = 7.944 s, UpperFence = 8.976 s
+ConfidenceInterval = [8.336 s; 8.623 s] (CI 99.9%), Margin = 0.143 s (1.69% of Mean)
+Skewness = -0.48, Kurtosis = 1.33, MValue = 2
 ```
 -------------------- Histogram --------------------
-[8.272 s ; 8.453 s) | @
-[8.453 s ; 8.635 s) | @@@@@@@@@@
-[8.635 s ; 8.962 s) | @@@@@@@@
+[8.226 s ; 8.657 s) | @@@@@@@@@@@@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=False]
-
+#### [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=False]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 31.127 s, StdErr = 3.438 s (11.04%), N = 30, StdDev = 18.828 s
-Min = 5.771 s, Q1 = 16.059 s, Median = 24.009 s, Q3 = 50.338 s, Max = 61.805 s
-IQR = 34.279 s, LowerFence = -35.359 s, UpperFence = 101.756 s
-ConfidenceInterval = [18.548 s; 43.707 s] (CI 99.9%), Margin = 12.580 s (40.41% of Mean)
-Skewness = 0.31, Kurtosis = 1.49, MValue = 3
-
+Mean = 13.228 s, StdErr = 0.630 s (4.77%), N = 30, StdDev = 3.452 s
+Min = 3.243 s, Q1 = 13.000 s, Median = 14.025 s, Q3 = 15.642 s, Max = 16.453 s
+IQR = 2.642 s, LowerFence = 9.037 s, UpperFence = 19.605 s
+ConfidenceInterval = [10.922 s; 15.535 s] (CI 99.9%), Margin = 2.307 s (17.44% of Mean)
+Skewness = -1.64, Kurtosis = 4.94, MValue = 3.27
 ```
 -------------------- Histogram --------------------
-[ 4.931 s ; 20.838 s) | @@@@@@@@@@@@@@
-[20.838 s ; 37.584 s) | @@@@@
-[37.584 s ; 46.595 s) | @@
-[46.595 s ; 62.501 s) | @@@@@@@@@
+[ 1.785 s ;  4.897 s) | @@
+[ 4.897 s ;  6.342 s) |
+[ 6.342 s ;  9.258 s) | @@
+[ 9.258 s ; 10.272 s) |
+[10.272 s ; 12.960 s) | @@@
+[12.960 s ; 15.876 s) | @@@@@@@@@@@@@@@@@@
+[15.876 s ; 17.911 s) | @@@@@
 ---------------------------------------------------
 ```
 
-#### Bulk EF Core [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=True]
-
+#### [BatchSize=50000, BenchmarkDbType=PostgreSql, CleanupTable=True]
 Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 5.415 s, StdErr = 0.021 s (0.38%), N = 14, StdDev = 0.077 s
-Min = 5.288 s, Q1 = 5.374 s, Median = 5.421 s, Q3 = 5.480 s, Max = 5.515 s
-IQR = 0.106 s, LowerFence = 5.216 s, UpperFence = 5.638 s
-ConfidenceInterval = [5.327 s; 5.502 s] (CI 99.9%), Margin = 0.087 s (1.61% of Mean)
-Skewness = -0.36, Kurtosis = 1.69, MValue = 2
-
+Mean = 3.112 s, StdErr = 0.005 s (0.15%), N = 15, StdDev = 0.018 s
+Min = 3.078 s, Q1 = 3.099 s, Median = 3.111 s, Q3 = 3.126 s, Max = 3.142 s
+IQR = 0.027 s, LowerFence = 3.058 s, UpperFence = 3.166 s
+ConfidenceInterval = [3.092 s; 3.131 s] (CI 99.9%), Margin = 0.020 s (0.64% of Mean)
+Skewness = -0.05, Kurtosis = 1.87, MValue = 2
 ```
 -------------------- Histogram --------------------
-[5.246 s ; 5.530 s) | @@@@@@@@@@@@@@
+[3.074 s ; 3.152 s) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+```
+
+#### [BatchSize=200000, BenchmarkDbType=MsSql, CleanupTable=False]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 12.975 s, StdErr = 0.545 s (4.20%), N = 30, StdDev = 2.982 s
+Min = 8.467 s, Q1 = 10.271 s, Median = 12.744 s, Q3 = 16.152 s, Max = 17.094 s
+IQR = 5.881 s, LowerFence = 1.450 s, UpperFence = 24.973 s
+ConfidenceInterval = [10.982 s; 14.967 s] (CI 99.9%), Margin = 1.993 s (15.36% of Mean)
+Skewness = -0.02, Kurtosis = 1.39, MValue = 2.77
+```
+-------------------- Histogram --------------------
+[ 8.420 s ; 10.939 s) | @@@@@@@@@@@
+[10.939 s ; 13.913 s) | @@@@@@
+[13.913 s ; 17.219 s) | @@@@@@@@@@@@@
+---------------------------------------------------
+```
+
+#### [BatchSize=200000, BenchmarkDbType=MsSql, CleanupTable=True]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 7.851 s, StdErr = 0.018 s (0.23%), N = 13, StdDev = 0.066 s
+Min = 7.768 s, Q1 = 7.796 s, Median = 7.857 s, Q3 = 7.888 s, Max = 7.962 s
+IQR = 0.092 s, LowerFence = 7.658 s, UpperFence = 8.025 s
+ConfidenceInterval = [7.772 s; 7.931 s] (CI 99.9%), Margin = 0.080 s (1.01% of Mean)
+Skewness = 0.32, Kurtosis = 1.53, MValue = 2
+```
+-------------------- Histogram --------------------
+[7.731 s ; 7.999 s) | @@@@@@@@@@@@@
+---------------------------------------------------
+```
+
+#### [BatchSize=200000, BenchmarkDbType=PostgreSql, CleanupTable=False]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.251 s, StdErr = 0.629 s (4.75%), N = 30, StdDev = 3.446 s
+Min = 3.221 s, Q1 = 12.958 s, Median = 14.025 s, Q3 = 15.661 s, Max = 16.614 s
+IQR = 2.703 s, LowerFence = 8.904 s, UpperFence = 19.715 s
+ConfidenceInterval = [10.948 s; 15.553 s] (CI 99.9%), Margin = 2.303 s (17.38% of Mean)
+Skewness = -1.65, Kurtosis = 5.02, MValue = 2.55
+```
+-------------------- Histogram --------------------
+[ 1.765 s ;  4.880 s) | @@
+[ 4.880 s ;  6.527 s) |
+[ 6.527 s ;  9.791 s) | @@
+[ 9.791 s ; 12.856 s) | @@
+[12.856 s ; 15.768 s) | @@@@@@@@@@@@@@@@@@@
+[15.768 s ; 18.070 s) | @@@@@
+---------------------------------------------------
+```
+
+#### [BatchSize=200000, BenchmarkDbType=PostgreSql, CleanupTable=True]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 3.188 s, StdErr = 0.011 s (0.36%), N = 15, StdDev = 0.044 s
+Min = 3.100 s, Q1 = 3.156 s, Median = 3.186 s, Q3 = 3.224 s, Max = 3.255 s
+IQR = 0.068 s, LowerFence = 3.054 s, UpperFence = 3.326 s
+ConfidenceInterval = [3.141 s; 3.235 s] (CI 99.9%), Margin = 0.047 s (1.48% of Mean)
+Skewness = -0.19, Kurtosis = 1.98, MValue = 2
+```
+-------------------- Histogram --------------------
+[3.077 s ; 3.198 s) | @@@@@@@@@@
+[3.198 s ; 3.272 s) | @@@@@
 ---------------------------------------------------
 ```
 
 #### Outliers
-BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (14.61 s..17.53 s)
-BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 6 outliers were detected (8.96 s..13.09 s)
-BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (5.68 s, 5.68 s)
+- BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (3.23 s..6.90 s)
+- BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (3.41 s, 3.44 s)
+- BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 4 outliers were detected (3.24 s..8.65 s)
+- BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 2 outliers were removed (8.21 s, 8.27 s)
+- BulkBenchmarkEfService.EfCoreBulk: InvocationCount=1, MaxIterationCount=30, UnrollFactor=1, WarmupCount=0 -> 3 outliers were detected (3.22 s..7.00 s)
 
 ## Small inserts on already large table
 Table consisting of millions of rows receives non-bulk small inserts of 100s of items.
