@@ -57,9 +57,9 @@ public class BulkBenchmarkEfService
         {
             CleanTable();
         }
-        else if (BenchmarkDbType == DatabaseType.PostgreSql)
+        else if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
         {
-            using var pgCtx = new PgBenchmarkDbContext();
+            using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("cluster").ToList();
         }
     }
@@ -67,9 +67,9 @@ public class BulkBenchmarkEfService
     [GlobalCleanup]
     public void CleanTable()
     {
-        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
         {
-            using var pgCtx = new PgBenchmarkDbContext();
+            using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToList();
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToList();
         }

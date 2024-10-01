@@ -77,9 +77,9 @@ public class BigOnLargeTableBenchmarkEfService
     [GlobalCleanup]
     public async Task CleanTable()
     {
-        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
         {
-            using var pgCtx = new PgBenchmarkDbContext();
+            using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToListAsync();
             await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToListAsync();
         }

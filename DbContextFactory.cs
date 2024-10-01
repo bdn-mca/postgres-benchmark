@@ -9,8 +9,10 @@ internal class DbContextFactory
         {
             case DatabaseType.MsSql:
                 return new MsBenchmarkDbContext();
-            case DatabaseType.PostgreSql:
-                return new PgBenchmarkDbContext();
+            case DatabaseType.PostgreSqlWindows:
+            case DatabaseType.PostgreSqlLinux:
+            case DatabaseType.PostgreSqlCitus:
+                return new PgBenchmarkDbContext(dbType);
             default:
                 throw new ArgumentException("Unknown value.", nameof(dbType));
         }

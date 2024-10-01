@@ -25,8 +25,10 @@ public class BulkBenchmarkStoredProcService
     {
         return BenchmarkDbType switch
         {
-            DatabaseType.MsSql => "exec MsSqlBenchmarkInsert 1000000",
-            DatabaseType.PostgreSql => "call public.postgres_benchmark_insert(1000000)",
+            DatabaseType.MsSql
+                => "exec MsSqlBenchmarkInsert 1000000",
+            DatabaseType.PostgreSqlWindows or DatabaseType.PostgreSqlLinux or DatabaseType.PostgreSqlCitus
+                => "call public.postgres_benchmark_insert(1000000)",
             _ => throw new ArgumentException("Unknown value.", nameof(BenchmarkDbType)),
         };
     }
@@ -43,9 +45,9 @@ public class BulkBenchmarkStoredProcService
     [GlobalCleanup]
     public void CleanTable()
     {
-        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
         {
-            using var pgCtx = new PgBenchmarkDbContext();
+            using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToList();
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToList();
         }

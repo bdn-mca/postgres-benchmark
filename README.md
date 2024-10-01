@@ -1,11 +1,15 @@
 # MsSql - PostgreSql benchmark
-Benchmarking `PostgreSql 16` vs. `MS SQL 2022` performance with EF Core 8 and Stored procedures.
-Both database servers installed and benchmarks run on local machine. Both servers with default settings.
+Benchmarking `PostgreSql` vs. `MS SQL 2022` performance with EF Core 8 and Stored procedures.
+- Windows: both database servers installed on local machine with default settings.
+- Linux: official PostgreSql docker
+- Citus: official Citus docker
 
 # Getting started
-1. Manually create the tables and stored procedures
+1. Pull docker images of PostgreSql and Citus, and run them on different ports
+2. Manually create the tables and stored procedures on all database instances you intend to benchmark
     - You can find the scripts in the [Database](https://github.com/bdn-mca/postgres-benchmark/tree/main/Database) folder
-2. Build and Run in `Release` configuration
+3. Update the connection strings in the [PgBenchmarkDbContext](https://github.com/bdn-mca/postgres-benchmark/blob/main/Infrastructure/PgBenchmarkDbContext.cs)
+4. Build and Run in `Release` configuration
 
 # Benchmarks
 ## Legend

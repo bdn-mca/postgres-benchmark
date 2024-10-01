@@ -20,9 +20,9 @@ public class SmallBenchmarkStoredProcService
     [GlobalCleanup]
     public async Task CleanTable()
     {
-        if (BenchmarkDbType == DatabaseType.PostgreSql)
+        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
         {
-            using var pgCtx = new PgBenchmarkDbContext();
+            using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToListAsync();
             await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("vacuum full public.benchmark").ToListAsync();
         }
@@ -37,8 +37,10 @@ public class SmallBenchmarkStoredProcService
     {
         return BenchmarkDbType switch
         {
-            DatabaseType.MsSql => "exec MsSqlBenchmarkInsert 100",
-            DatabaseType.PostgreSql => "call public.postgres_benchmark_insert(100)",
+            DatabaseType.MsSql
+                => "exec MsSqlBenchmarkInsert 100",
+            DatabaseType.PostgreSqlWindows or DatabaseType.PostgreSqlLinux or DatabaseType.PostgreSqlCitus
+                => "call public.postgres_benchmark_insert(100)",
             _ => throw new ArgumentException("Unknown value.", nameof(BenchmarkDbType)),
         };
     }
