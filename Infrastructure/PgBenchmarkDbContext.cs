@@ -4,9 +4,9 @@ namespace PostgreSqlBenchmark.Infrastructure;
 
 internal class PgBenchmarkDbContext : BaseDbContext
 {
-    internal const string WindowsConnectionString = @"Host=localhost;Port:5432;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
-    internal const string LinuxConnectionString = @"Host=localhost;Port:5501;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
-    internal const string LinuxCitusConnectionString = @"Host=localhost;Port:5500;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
+    internal const string WindowsConnectionString = @"Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
+    internal const string LinuxConnectionString = @"Host=127.0.0.1;Port=5501;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
+    internal const string LinuxCitusConnectionString = @"Host=127.0.0.1;Port=5500;Database=postgres;Username=postgres;Password=a123456!;Include Error Detail=true";
 
     private readonly DatabaseType databaseType;
 
