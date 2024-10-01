@@ -4,7 +4,7 @@ Both database servers installed and benchmarks run on local machine. Both server
 
 # Getting started
 1. Manually create the tables and stored procedures
-  - You can find the scripts in the [Database](https://github.com/bdn-mca/postgres-benchmark/tree/main/Database) folder
+    - You can find the scripts in the [Database](https://github.com/bdn-mca/postgres-benchmark/tree/main/Database) folder
 2. Build and Run in `Release` configuration
 
 # Benchmarks
