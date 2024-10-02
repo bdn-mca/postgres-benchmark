@@ -1,6 +1,5 @@
 ﻿namespace PostgreSqlBenchmark;
 
-[Flags]
 public enum DatabaseType
 {
     MsSql = 1,
