@@ -850,3 +850,27 @@ Skewness = 0.47, Kurtosis = 1.65, MValue = 2.88
 [24.925 s ; 29.725 s) | @
 ---------------------------------------------------
 ```
+
+## Small inserts on large table
+Doing inserts of 100 rows (non-bulk) into a large table with millions of rows.
+
+| Method         | BenchmarkDbType | InitialTableSize | Mean      | Error     | StdDev    |
+|--------------- |---------------- |----------------- |----------:|----------:|----------:|
+| EfCoreRangeAdd | PostgreSqlLinux | 3000001          |  8.621 ms | 0.1688 ms | 0.2366 ms |
+| EfCoreRangeAdd | PostgreSqlLinux | 10000001         | 11.183 ms | 0.1004 ms | 0.0890 ms |
+| EfCoreRangeAdd | PostgreSqlCitus | 3000001          | 10.699 ms | 0.2059 ms | 0.2451 ms |
+| EfCoreRangeAdd | PostgreSqlCitus | 10000001         | 11.872 ms | 0.2009 ms | 0.1879 ms |
+
+## Bulk inserts on large table
+Doing bulk inserts of 1000s of rows into a large table with millions of rows.
+
+| Method        | BenchmarkDbType | InitialTableSize | BulkAddSize | Mean      | Error    | StdDev    |
+|-------------- |---------------- |----------------- |------------ |----------:|---------:|----------:|
+| EfCoreBulkAdd | PostgreSqlLinux | 3000001          | 1000        |  11.40 ms | 0.292 ms |  0.844 ms |
+| EfCoreBulkAdd | PostgreSqlLinux | 3000001          | 20000       | 106.85 ms | 4.742 ms | 13.908 ms |
+| EfCoreBulkAdd | PostgreSqlLinux | 10000001         | 1000        |  17.98 ms | 0.356 ms |  0.651 ms |
+| EfCoreBulkAdd | PostgreSqlLinux | 10000001         | 20000       | 177.35 ms | 3.854 ms | 10.744 ms |
+| EfCoreBulkAdd | PostgreSqlCitus | 3000001          | 1000        |  11.37 ms | 0.254 ms |  0.724 ms |
+| EfCoreBulkAdd | PostgreSqlCitus | 3000001          | 20000       | 108.76 ms | 3.576 ms | 10.316 ms |
+| EfCoreBulkAdd | PostgreSqlCitus | 10000001         | 1000        |  18.30 ms | 0.278 ms |  0.286 ms |
+| EfCoreBulkAdd | PostgreSqlCitus | 10000001         | 20000       | 173.48 ms | 3.437 ms |  8.872 ms |
