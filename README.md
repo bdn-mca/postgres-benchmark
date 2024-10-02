@@ -687,3 +687,166 @@ Skewness = -0.18, Kurtosis = 1.79, MValue = 2
 - BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 4 outliers were removed (23.51 ms..235.03 ms)
 - BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 4 outliers were removed (785.97 ms..981.66 ms)
 - BigOnLargeTableBenchmarkEfService.EfCoreBulkAdd: InvocationCount=1, UnrollFactor=1, WarmupCount=0 -> 1 outlier  was  removed (342.87 ms)
+
+# PostgreSql Linux vs. PostgreSql Citus
+Trying the same benchmarks on `PostgreSql 17` (from the official docker) vs. `PostgreSql Citus` (from the official docker).
+
+## Small stored procedures
+Stored procedures inserting 100 items.
+
+| Method          | BenchmarkDbType | Mean     | Error     | StdDev    |
+|---------------- |---------------- |---------:|----------:|----------:|
+| StoredProcedure | PostgreSqlLinux | 3.144 ms | 0.0629 ms | 0.1067 ms |
+| StoredProcedure | PostgreSqlCitus | 3.109 ms | 0.0621 ms | 0.0870 ms |
+
+## Small EF Core
+Inserting 100 items (non-bulk) with EF Core.
+
+| Method          | BenchmarkDbType | Mean     | Error     | StdDev    |
+|---------------- |---------------- |---------:|----------:|----------:|
+| EfCoreSingleAdd | PostgreSqlLinux | 8.397 ms | 0.1645 ms | 0.1760 ms |
+| EfCoreRangeAdd  | PostgreSqlLinux | 8.602 ms | 0.1691 ms | 0.2682 ms |
+| EfCoreSingleAdd | PostgreSqlCitus | 9.257 ms | 0.1776 ms | 0.2181 ms |
+| EfCoreRangeAdd  | PostgreSqlCitus | 9.061 ms | 0.1760 ms | 0.2410 ms |
+
+## Bulk stored procedure
+Inserting 1.000.000 items with stored procedure, using `generate_series`.
+Do not `CleanupTable` - meaning does not delete and vacuum between operations.
+
+| Method          | BenchmarkDbType | CleanupTable | Mean    | Error   | StdDev  |
+|---------------- |---------------- |------------- |--------:|--------:|--------:|
+| StoredProcedure | PostgreSqlLinux | False        | 18.43 s | 5.835 s | 8.733 s |
+| StoredProcedure | PostgreSqlCitus | False        | 17.91 s | 5.473 s | 8.192 s |
+
+```
+[BenchmarkDbType=PostgreSqlLinux, CleanupTable=False]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 18.433 s, StdErr = 1.594 s (8.65%), N = 30, StdDev = 8.733 s
+Min = 5.577 s, Q1 = 11.752 s, Median = 16.222 s, Q3 = 25.942 s, Max = 32.824 s
+IQR = 14.189 s, LowerFence = -9.532 s, UpperFence = 47.225 s
+ConfidenceInterval = [12.598 s; 24.267 s] (CI 99.9%), Margin = 5.835 s (31.65% of Mean)
+Skewness = 0.13, Kurtosis = 1.52, MValue = 3.5
+-------------------- Histogram --------------------
+[ 1.888 s ;  8.931 s) | @@@@
+[ 8.931 s ; 16.309 s) | @@@@@@@@@@@@
+[16.309 s ; 23.716 s) | @@
+[23.716 s ; 31.093 s) | @@@@@@@@@@@
+[31.093 s ; 36.513 s) | @
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlCitus, CleanupTable=False]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 17.914 s, StdErr = 1.496 s (8.35%), N = 30, StdDev = 8.192 s
+Min = 5.953 s, Q1 = 11.215 s, Median = 17.036 s, Q3 = 25.703 s, Max = 31.240 s
+IQR = 14.487 s, LowerFence = -10.516 s, UpperFence = 47.434 s
+ConfidenceInterval = [12.441 s; 23.388 s] (CI 99.9%), Margin = 5.473 s (30.55% of Mean)
+Skewness = 0.07, Kurtosis = 1.45, MValue = 3.83
+-------------------- Histogram --------------------
+[ 5.899 s ; 12.820 s) | @@@@@@@@@@@@
+[12.820 s ; 20.154 s) | @@@@@@
+[20.154 s ; 22.833 s) |
+[22.833 s ; 29.754 s) | @@@@@@@@@@@
+[29.754 s ; 34.701 s) | @
+---------------------------------------------------
+```
+
+## Bulk EF Core
+Inserting 1.000.000 items with EF Core by using EF.BulkExtensions.
+
+| Method     | BenchmarkDbType | CleanupTable | BatchSize | Mean    | Error   | StdDev  | Median   |
+|----------- |---------------- |------------- |---------- |--------:|--------:|--------:|---------:|
+| EfCoreBulk | PostgreSqlLinux | False        | 2000      | 13.22 s | 4.870 s | 7.289 s |  9.950 s |
+| EfCoreBulk | PostgreSqlLinux | False        | 50000     | 13.15 s | 4.736 s | 7.088 s |  9.647 s |
+| EfCoreBulk | PostgreSqlLinux | False        | 200000    | 13.02 s | 4.537 s | 6.791 s | 10.009 s |
+| EfCoreBulk | PostgreSqlCitus | False        | 2000      | 13.04 s | 4.628 s | 6.927 s |  9.332 s |
+| EfCoreBulk | PostgreSqlCitus | False        | 50000     | 13.14 s | 4.781 s | 7.155 s |  9.676 s |
+| EfCoreBulk | PostgreSqlCitus | False        | 200000    | 13.24 s | 4.747 s | 7.105 s |  9.592 s |
+
+```
+[BenchmarkDbType=PostgreSqlLinux, CleanupTable=False, BatchSize=2000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.224 s, StdErr = 1.331 s (10.06%), N = 30, StdDev = 7.289 s
+Min = 3.967 s, Q1 = 7.923 s, Median = 9.950 s, Q3 = 19.141 s, Max = 26.945 s
+IQR = 11.218 s, LowerFence = -8.904 s, UpperFence = 35.968 s
+ConfidenceInterval = [8.353 s; 18.094 s] (CI 99.9%), Margin = 4.870 s (36.83% of Mean)
+Skewness = 0.54, Kurtosis = 1.79, MValue = 2.8
+-------------------- Histogram --------------------
+[ 0.888 s ;  4.785 s) | @@
+[ 4.785 s ; 10.943 s) | @@@@@@@@@@@@@@@
+[10.943 s ; 15.011 s) | @
+[15.011 s ; 22.046 s) | @@@@@@@
+[22.046 s ; 28.204 s) | @@@@@
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlLinux, CleanupTable=False, BatchSize=50000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.155 s, StdErr = 1.294 s (9.84%), N = 30, StdDev = 7.088 s
+Min = 3.874 s, Q1 = 7.765 s, Median = 9.647 s, Q3 = 19.947 s, Max = 27.136 s
+IQR = 12.182 s, LowerFence = -10.507 s, UpperFence = 38.220 s
+ConfidenceInterval = [8.419 s; 17.890 s] (CI 99.9%), Margin = 4.736 s (36.00% of Mean)
+Skewness = 0.45, Kurtosis = 1.68, MValue = 2.4
+-------------------- Histogram --------------------
+[ 3.569 s ;  9.556 s) | @@@@@@@@@@@@@@@
+[ 9.556 s ; 15.546 s) | @@@@@
+[15.546 s ; 23.416 s) | @@@@@@@@
+[23.416 s ; 30.130 s) | @@
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlLinux, CleanupTable=False, BatchSize=200000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.023 s, StdErr = 1.240 s (9.52%), N = 30, StdDev = 6.791 s
+Min = 3.921 s, Q1 = 7.769 s, Median = 10.009 s, Q3 = 19.509 s, Max = 24.837 s
+IQR = 11.740 s, LowerFence = -9.841 s, UpperFence = 37.120 s
+ConfidenceInterval = [8.486 s; 17.560 s] (CI 99.9%), Margin = 4.537 s (34.84% of Mean)
+Skewness = 0.39, Kurtosis = 1.57, MValue = 2.8
+-------------------- Histogram --------------------
+[ 3.749 s ;  9.486 s) | @@@@@@@@@@@@@@@
+[ 9.486 s ; 13.712 s) | @@
+[13.712 s ; 19.483 s) | @@@@@
+[19.483 s ; 25.219 s) | @@@@@@@@
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlCitus, CleanupTable=False, BatchSize=2000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.036 s, StdErr = 1.265 s (9.70%), N = 30, StdDev = 6.927 s
+Min = 4.118 s, Q1 = 7.816 s, Median = 9.332 s, Q3 = 19.520 s, Max = 25.132 s
+IQR = 11.705 s, LowerFence = -9.741 s, UpperFence = 37.077 s
+ConfidenceInterval = [8.408 s; 17.664 s] (CI 99.9%), Margin = 4.628 s (35.50% of Mean)
+Skewness = 0.46, Kurtosis = 1.57, MValue = 2.88
+-------------------- Histogram --------------------
+[ 3.867 s ; 10.644 s) | @@@@@@@@@@@@@@@@
+[10.644 s ; 16.496 s) | @@@@
+[16.496 s ; 18.628 s) | @
+[18.628 s ; 24.480 s) | @@@@@@@@
+[24.480 s ; 28.058 s) | @
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlCitus, CleanupTable=False, BatchSize=50000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.137 s, StdErr = 1.306 s (9.94%), N = 30, StdDev = 7.155 s
+Min = 4.208 s, Q1 = 7.935 s, Median = 9.676 s, Q3 = 19.533 s, Max = 25.896 s
+IQR = 11.598 s, LowerFence = -9.463 s, UpperFence = 36.931 s
+ConfidenceInterval = [8.357 s; 17.918 s] (CI 99.9%), Margin = 4.781 s (36.39% of Mean)
+Skewness = 0.52, Kurtosis = 1.68, MValue = 2.88
+-------------------- Histogram --------------------
+[ 4.095 s ; 10.140 s) | @@@@@@@@@@@@@@@@
+[10.140 s ; 12.448 s) | @
+[12.448 s ; 18.493 s) | @@@@@
+[18.493 s ; 25.971 s) | @@@@@@@@
+---------------------------------------------------
+
+[BenchmarkDbType=PostgreSqlCitus, CleanupTable=False, BatchSize=200000]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 13.244 s, StdErr = 1.297 s (9.79%), N = 30, StdDev = 7.105 s
+Min = 3.887 s, Q1 = 7.874 s, Median = 9.592 s, Q3 = 19.778 s, Max = 26.724 s
+IQR = 11.904 s, LowerFence = -9.983 s, UpperFence = 37.635 s
+ConfidenceInterval = [8.497 s; 17.991 s] (CI 99.9%), Margin = 4.747 s (35.84% of Mean)
+Skewness = 0.47, Kurtosis = 1.65, MValue = 2.88
+-------------------- Histogram --------------------
+[ 3.790 s ;  9.792 s) | @@@@@@@@@@@@@@@@
+[ 9.792 s ; 12.912 s) | @
+[12.912 s ; 18.923 s) | @@@@
+[18.923 s ; 24.925 s) | @@@@@@@@
+[24.925 s ; 29.725 s) | @
+---------------------------------------------------
+```

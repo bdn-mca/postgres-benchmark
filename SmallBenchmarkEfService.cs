@@ -55,7 +55,9 @@ public class SmallBenchmarkEfService
     [GlobalCleanup]
     public async Task CleanTable()
     {
-        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
+        if (BenchmarkDbType == DatabaseType.PostgreSqlWindows ||
+            BenchmarkDbType == DatabaseType.PostgreSqlLinux ||
+            BenchmarkDbType == DatabaseType.PostgreSqlCitus)
         {
             using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             await pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToListAsync();

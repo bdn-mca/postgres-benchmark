@@ -45,7 +45,9 @@ public class BulkBenchmarkStoredProcService
     [GlobalCleanup]
     public void CleanTable()
     {
-        if (BenchmarkDbType.HasFlag(DatabaseType.PostgreSqlWindows | DatabaseType.PostgreSqlLinux | DatabaseType.PostgreSqlCitus))
+        if (BenchmarkDbType == DatabaseType.PostgreSqlWindows ||
+            BenchmarkDbType == DatabaseType.PostgreSqlLinux ||
+            BenchmarkDbType == DatabaseType.PostgreSqlCitus)
         {
             using var pgCtx = new PgBenchmarkDbContext(BenchmarkDbType);
             pgCtx.Set<BenchmarkSpEntity>().FromSqlRaw("delete from public.benchmark").ToList();
