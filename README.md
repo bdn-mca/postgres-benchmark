@@ -41,57 +41,70 @@ BenchmarkDotNet v0.14.0
 ## Small stored procedures
 Stored procedures inserting 100 items.
 
-| Method          | BenchmarkDbType | Mean     | Error     | StdDev    | Median   |
-|---------------- |---------------- |---------:|----------:|----------:|---------:|
-| StoredProcedure | MsSql           | 1.939 ms | 0.0627 ms | 0.1839 ms | 1.889 ms |
-| StoredProcedure | PostgreSql      | 1.220 ms | 0.0242 ms | 0.0645 ms | 1.206 ms |
-
-#### Small stored procedure [BenchmarkDbType=MsSql]
-
-Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 1.939 ms, StdErr = 0.018 ms (0.95%), N = 99, StdDev = 0.184 ms
-Min = 1.651 ms, Q1 = 1.812 ms, Median = 1.889 ms, Q3 = 2.054 ms, Max = 2.422 ms
-IQR = 0.241 ms, LowerFence = 1.451 ms, UpperFence = 2.416 ms
-ConfidenceInterval = [1.876 ms; 2.002 ms] (CI 99.9%), Margin = 0.063 ms (3.23% of Mean)
-Skewness = 0.73, Kurtosis = 2.74, MValue = 2.13
+| Method          | BenchmarkDbType   | Mean     | Error     | StdDev    |
+|---------------- |------------------ |---------:|----------:|----------:|
+| StoredProcedure | MsSql             | 1.765 ms | 0.0348 ms | 0.0719 ms |
+| StoredProcedure | PostgreSqlWindows | 1.214 ms | 0.0231 ms | 0.0393 ms |
+| StoredProcedure | PostgreSqlLinux   | 2.994 ms | 0.0596 ms | 0.0929 ms |
+| StoredProcedure | PostgreSqlCitus   | 3.049 ms | 0.0487 ms | 0.0407 ms |
 
 ```
+SmallBenchmarkStoredProcService.StoredProcedure: Job-BPZXLI(WarmupCount=0) [BenchmarkDbType=MsSql]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.765 ms, StdErr = 0.010 ms (0.57%), N = 52, StdDev = 0.072 ms
+Min = 1.647 ms, Q1 = 1.719 ms, Median = 1.754 ms, Q3 = 1.815 ms, Max = 1.975 ms
+IQR = 0.096 ms, LowerFence = 1.575 ms, UpperFence = 1.958 ms
+ConfidenceInterval = [1.730 ms; 1.800 ms] (CI 99.9%), Margin = 0.035 ms (1.97% of Mean)
+Skewness = 0.7, Kurtosis = 3.43, MValue = 2
 -------------------- Histogram --------------------
-[1.599 ms ; 1.687 ms) | @@
-[1.687 ms ; 1.804 ms) | @@@@@@@@@@@@@@@@@@@@
-[1.804 ms ; 1.909 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-[1.909 ms ; 2.020 ms) | @@@@@@@@@@@@@@@@
-[2.020 ms ; 2.143 ms) | @@@@@@@@@@@@@@@@
-[2.143 ms ; 2.239 ms) | @@@@
-[2.239 ms ; 2.343 ms) | @@@@@@@@
-[2.343 ms ; 2.440 ms) | @@
+[1.646 ms ; 1.697 ms) | @@@@@@@@@
+[1.697 ms ; 1.761 ms) | @@@@@@@@@@@@@@@@@@@@
+[1.761 ms ; 1.836 ms) | @@@@@@@@@@@@@@@@@
+[1.836 ms ; 1.880 ms) | @@@
+[1.880 ms ; 1.937 ms) | @
+[1.937 ms ; 1.987 ms) | @@
+---------------------------------------------------
+
+SmallBenchmarkStoredProcService.StoredProcedure: Job-BPZXLI(WarmupCount=0) [BenchmarkDbType=PostgreSqlWindows]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.214 ms, StdErr = 0.006 ms (0.53%), N = 37, StdDev = 0.039 ms
+Min = 1.133 ms, Q1 = 1.185 ms, Median = 1.214 ms, Q3 = 1.238 ms, Max = 1.292 ms
+IQR = 0.052 ms, LowerFence = 1.107 ms, UpperFence = 1.317 ms
+ConfidenceInterval = [1.191 ms; 1.237 ms] (CI 99.9%), Margin = 0.023 ms (1.90% of Mean)
+Skewness = 0.16, Kurtosis = 2.28, MValue = 2
+-------------------- Histogram --------------------
+[1.129 ms ; 1.159 ms) | @@@
+[1.159 ms ; 1.200 ms) | @@@@@@@@@@@@@
+[1.200 ms ; 1.239 ms) | @@@@@@@@@@@@
+[1.239 ms ; 1.279 ms) | @@@@@@@
+[1.279 ms ; 1.307 ms) | @@
+---------------------------------------------------
+
+SmallBenchmarkStoredProcService.StoredProcedure: Job-BPZXLI(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 2.994 ms, StdErr = 0.016 ms (0.55%), N = 32, StdDev = 0.093 ms
+Min = 2.886 ms, Q1 = 2.920 ms, Median = 2.971 ms, Q3 = 3.040 ms, Max = 3.197 ms
+IQR = 0.121 ms, LowerFence = 2.739 ms, UpperFence = 3.221 ms
+ConfidenceInterval = [2.935 ms; 3.054 ms] (CI 99.9%), Margin = 0.060 ms (1.99% of Mean)
+Skewness = 0.8, Kurtosis = 2.53, MValue = 2
+-------------------- Histogram --------------------
+[2.847 ms ; 2.977 ms) | @@@@@@@@@@@@@@@@@@
+[2.977 ms ; 3.075 ms) | @@@@@@@@@
+[3.075 ms ; 3.203 ms) | @@@@@
+---------------------------------------------------
+
+SmallBenchmarkStoredProcService.StoredProcedure: Job-BPZXLI(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus]
+Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 3.049 ms, StdErr = 0.011 ms (0.37%), N = 13, StdDev = 0.041 ms
+Min = 2.978 ms, Q1 = 3.032 ms, Median = 3.040 ms, Q3 = 3.070 ms, Max = 3.129 ms
+IQR = 0.038 ms, LowerFence = 2.974 ms, UpperFence = 3.127 ms
+ConfidenceInterval = [3.000 ms; 3.098 ms] (CI 99.9%), Margin = 0.049 ms (1.60% of Mean)
+Skewness = -0.02, Kurtosis = 2.42, MValue = 2
+-------------------- Histogram --------------------
+[2.955 ms ; 3.019 ms) | @@
+[3.019 ms ; 3.138 ms) | @@@@@@@@@@@
 ---------------------------------------------------
 ```
-
-#### Small stored procedure [BenchmarkDbType=PostgreSql]
-
-Runtime = .NET 8.0.8 (8.0.824.36612), X64 RyuJIT AVX2; GC = Concurrent Workstation
-Mean = 1.220 ms, StdErr = 0.007 ms (0.58%), N = 83, StdDev = 0.064 ms
-Min = 1.125 ms, Q1 = 1.172 ms, Median = 1.206 ms, Q3 = 1.255 ms, Max = 1.412 ms
-IQR = 0.083 ms, LowerFence = 1.048 ms, UpperFence = 1.380 ms
-ConfidenceInterval = [1.195 ms; 1.244 ms] (CI 99.9%), Margin = 0.024 ms (1.98% of Mean)
-Skewness = 0.92, Kurtosis = 3.36, MValue = 2
-
-```
--------------------- Histogram --------------------
-[1.106 ms ; 1.150 ms) | @@@@@@@
-[1.150 ms ; 1.189 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@
-[1.189 ms ; 1.232 ms) | @@@@@@@@@@@@@@@@@@@@@
-[1.232 ms ; 1.272 ms) | @@@@@@@@@@@
-[1.272 ms ; 1.314 ms) | @@@@@@@@@@
-[1.314 ms ; 1.372 ms) | @@@@@
-[1.372 ms ; 1.431 ms) | @@
----------------------------------------------------
-```
-
-#### Outliers
-SmallBenchmarkStoredProcService.StoredProcedure: WarmupCount=0 -> 1 outlier  was  removed (2.46 ms)
-SmallBenchmarkStoredProcService.StoredProcedure: WarmupCount=0 -> 5 outliers were removed (1.44 ms..1.99 ms)
 
 ## Small EF Core (not bulk)
 Inserting 100 items with entity framework, without using bulk extensions.
