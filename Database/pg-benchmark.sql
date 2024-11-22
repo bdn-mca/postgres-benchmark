@@ -4,17 +4,16 @@
 
 CREATE TABLE IF NOT EXISTS public.benchmark
 (
-    id bigint NOT NULL DEFAULT 1,
+    id integer generated always as identity,
     created_on timestamp with time zone NOT NULL,
     deleted_on timestamp with time zone,
     name character varying(50) COLLATE pg_catalog."default" NOT NULL,
     type integer NOT NULL,
     properties character varying(200) COLLATE pg_catalog."default",
     uid uuid NOT NULL,
-    CONSTRAINT benchmark_pkey PRIMARY KEY (uid)
+    amount numeric(28, 8) NOT NULL,
+    CONSTRAINT benchmark_pkey PRIMARY KEY (id)
 )
-
-TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.benchmark
     OWNER to postgres;

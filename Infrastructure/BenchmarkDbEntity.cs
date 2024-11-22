@@ -14,4 +14,6 @@ internal class BenchmarkDbEntity
     public int Type { get; set; }
 
     public string? Properties { get; set; }
+
+    public decimal Amount { get; set; }
 }

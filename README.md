@@ -1121,3 +1121,391 @@ Skewness = -0.38, Kurtosis = 2.92, MValue = 2
 [184.841 ms ; 190.529 ms) | @@@@
 ---------------------------------------------------
 ```
+
+## Aggregate functions
+| Method       | BenchmarkDbType | InitialTableSize | Mean        | Error       | StdDev      | Median      |
+|------------- |---------------- |----------------- |------------:|------------:|------------:|------------:|
+| ExecuteCount | MsSql           | 50000            |    719.9 us |    13.34 us |    11.83 us |    716.3 us |
+| ExecuteAvg   | MsSql           | 50000            |  3,566.2 us |    40.32 us |    39.60 us |  3,565.1 us |
+| ExecuteSum   | MsSql           | 50000            |  3,570.2 us |    41.53 us |    36.82 us |  3,566.5 us |
+| ExecuteCount | MsSql           | 250000           |  1,973.9 us |    23.48 us |    18.33 us |  1,969.3 us |
+| ExecuteAvg   | MsSql           | 250000           | 16,011.7 us |   177.85 us |   166.36 us | 15,932.7 us |
+| ExecuteSum   | MsSql           | 250000           | 16,863.4 us |   286.27 us |   306.30 us | 16,877.3 us |
+| ExecuteCount | MsSql           | 1000000          |  6,587.6 us |    89.48 us |    79.32 us |  6,589.7 us |
+| ExecuteAvg   | MsSql           | 1000000          | 63,347.0 us | 1,200.35 us | 1,122.81 us | 62,791.9 us |
+| ExecuteSum   | MsSql           | 1000000          | 63,930.4 us |   701.55 us | 1,247.00 us | 63,833.5 us |
+| ExecuteCount | PostgreSqlLinux | 50000            |    866.7 us |    14.12 us |    29.16 us |    859.7 us |
+| ExecuteAvg   | PostgreSqlLinux | 50000            |  1,642.2 us |    28.37 us |    27.86 us |  1,639.5 us |
+| ExecuteSum   | PostgreSqlLinux | 50000            |  1,667.3 us |    32.96 us |    70.96 us |  1,653.0 us |
+| ExecuteCount | PostgreSqlLinux | 250000           |  4,405.5 us |    86.53 us |   139.74 us |  4,368.7 us |
+| ExecuteAvg   | PostgreSqlLinux | 250000           |  5,767.1 us |   114.27 us |   156.42 us |  5,715.8 us |
+| ExecuteSum   | PostgreSqlLinux | 250000           |  5,784.0 us |   111.96 us |   128.94 us |  5,765.5 us |
+| ExecuteCount | PostgreSqlLinux | 1000000          | 16,589.5 us |   267.59 us |   237.21 us | 16,612.3 us |
+| ExecuteAvg   | PostgreSqlLinux | 1000000          | 21,545.1 us |   275.21 us |   243.97 us | 21,534.5 us |
+| ExecuteSum   | PostgreSqlLinux | 1000000          | 21,266.8 us |   319.63 us |   298.98 us | 21,218.6 us |
+| ExecuteCount | PostgreSqlCitus | 50000            |  1,436.4 us |    28.50 us |    46.82 us |  1,434.8 us |
+| ExecuteAvg   | PostgreSqlCitus | 50000            |  1,735.2 us |    34.45 us |    92.54 us |  1,708.5 us |
+| ExecuteSum   | PostgreSqlCitus | 50000            |  1,676.5 us |    33.31 us |    64.18 us |  1,661.7 us |
+| ExecuteCount | PostgreSqlCitus | 250000           |  1,473.1 us |    28.97 us |    65.38 us |  1,453.3 us |
+| ExecuteAvg   | PostgreSqlCitus | 250000           |  5,992.0 us |   117.08 us |   139.37 us |  5,978.1 us |
+| ExecuteSum   | PostgreSqlCitus | 250000           |  5,966.3 us |   117.07 us |   143.78 us |  5,928.7 us |
+| ExecuteCount | PostgreSqlCitus | 1000000          | 16,744.1 us |   330.37 us |   441.04 us | 16,665.2 us |
+| ExecuteAvg   | PostgreSqlCitus | 1000000          | 21,644.7 us |   368.64 us |   344.82 us | 21,706.9 us |
+| ExecuteSum   | PostgreSqlCitus | 1000000          | 21,703.6 us |   333.94 us |   278.86 us | 21,698.7 us |
+
+```
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 719.876 us, StdErr = 3.161 us (0.44%), N = 14, StdDev = 11.826 us
+Min = 706.170 us, Q1 = 712.916 us, Median = 716.303 us, Q3 = 727.700 us, Max = 746.740 us
+IQR = 14.784 us, LowerFence = 690.740 us, UpperFence = 749.876 us
+ConfidenceInterval = [706.536 us; 733.216 us] (CI 99.9%), Margin = 13.340 us (1.85% of Mean)
+Skewness = 0.78, Kurtosis = 2.5, MValue = 2
+-------------------- Histogram --------------------
+[705.354 us ; 720.938 us) | @@@@@@@@@
+[720.938 us ; 753.180 us) | @@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 3.566 ms, StdErr = 0.010 ms (0.28%), N = 16, StdDev = 0.040 ms
+Min = 3.512 ms, Q1 = 3.543 ms, Median = 3.565 ms, Q3 = 3.578 ms, Max = 3.648 ms
+IQR = 0.035 ms, LowerFence = 3.491 ms, UpperFence = 3.630 ms
+ConfidenceInterval = [3.526 ms; 3.607 ms] (CI 99.9%), Margin = 0.040 ms (1.13% of Mean)
+Skewness = 0.53, Kurtosis = 2.29, MValue = 2
+-------------------- Histogram --------------------
+[3.491 ms ; 3.592 ms) | @@@@@@@@@@@@
+[3.592 ms ; 3.668 ms) | @@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 3.570 ms, StdErr = 0.010 ms (0.28%), N = 14, StdDev = 0.037 ms
+Min = 3.515 ms, Q1 = 3.543 ms, Median = 3.566 ms, Q3 = 3.583 ms, Max = 3.645 ms
+IQR = 0.041 ms, LowerFence = 3.482 ms, UpperFence = 3.644 ms
+ConfidenceInterval = [3.529 ms; 3.612 ms] (CI 99.9%), Margin = 0.042 ms (1.16% of Mean)
+Skewness = 0.49, Kurtosis = 2.28, MValue = 2
+-------------------- Histogram --------------------
+[3.495 ms ; 3.665 ms) | @@@@@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.974 ms, StdErr = 0.005 ms (0.27%), N = 12, StdDev = 0.018 ms
+Min = 1.954 ms, Q1 = 1.958 ms, Median = 1.969 ms, Q3 = 1.981 ms, Max = 2.015 ms
+IQR = 0.023 ms, LowerFence = 1.924 ms, UpperFence = 2.015 ms
+ConfidenceInterval = [1.950 ms; 1.997 ms] (CI 99.9%), Margin = 0.023 ms (1.19% of Mean)
+Skewness = 0.84, Kurtosis = 2.56, MValue = 2
+-------------------- Histogram --------------------
+[1.944 ms ; 2.025 ms) | @@@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 16.012 ms, StdErr = 0.043 ms (0.27%), N = 15, StdDev = 0.166 ms
+Min = 15.832 ms, Q1 = 15.860 ms, Median = 15.933 ms, Q3 = 16.145 ms, Max = 16.314 ms
+IQR = 0.286 ms, LowerFence = 15.431 ms, UpperFence = 16.574 ms
+ConfidenceInterval = [15.834 ms; 16.190 ms] (CI 99.9%), Margin = 0.178 ms (1.11% of Mean)
+Skewness = 0.42, Kurtosis = 1.53, MValue = 2
+-------------------- Histogram --------------------
+[15.743 ms ; 16.319 ms) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 16.863 ms, StdErr = 0.072 ms (0.43%), N = 18, StdDev = 0.306 ms
+Min = 16.391 ms, Q1 = 16.610 ms, Median = 16.877 ms, Q3 = 17.036 ms, Max = 17.497 ms
+IQR = 0.426 ms, LowerFence = 15.970 ms, UpperFence = 17.676 ms
+ConfidenceInterval = [16.577 ms; 17.150 ms] (CI 99.9%), Margin = 0.286 ms (1.70% of Mean)
+Skewness = 0.2, Kurtosis = 2.15, MValue = 2
+-------------------- Histogram --------------------
+[16.317 ms ; 16.785 ms) | @@@@@@@
+[16.785 ms ; 17.651 ms) | @@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 6.588 ms, StdErr = 0.021 ms (0.32%), N = 14, StdDev = 0.079 ms
+Min = 6.466 ms, Q1 = 6.520 ms, Median = 6.590 ms, Q3 = 6.631 ms, Max = 6.775 ms
+IQR = 0.111 ms, LowerFence = 6.354 ms, UpperFence = 6.797 ms
+ConfidenceInterval = [6.498 ms; 6.677 ms] (CI 99.9%), Margin = 0.089 ms (1.36% of Mean)
+Skewness = 0.52, Kurtosis = 2.88, MValue = 2
+-------------------- Histogram --------------------
+[6.423 ms ; 6.676 ms) | @@@@@@@@@@@@@
+[6.676 ms ; 6.818 ms) | @
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 63.347 ms, StdErr = 0.290 ms (0.46%), N = 15, StdDev = 1.123 ms
+Min = 62.311 ms, Q1 = 62.442 ms, Median = 62.792 ms, Q3 = 64.317 ms, Max = 65.592 ms
+IQR = 1.874 ms, LowerFence = 59.631 ms, UpperFence = 67.128 ms
+ConfidenceInterval = [62.147 ms; 64.547 ms] (CI 99.9%), Margin = 1.200 ms (1.89% of Mean)
+Skewness = 0.76, Kurtosis = 1.94, MValue = 2
+-------------------- Histogram --------------------
+[62.079 ms ; 64.063 ms) | @@@@@@@@@@
+[64.063 ms ; 66.189 ms) | @@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=MsSql, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 63.930 ms, StdErr = 0.197 ms (0.31%), N = 40, StdDev = 1.247 ms
+Min = 62.435 ms, Q1 = 63.039 ms, Median = 63.834 ms, Q3 = 64.294 ms, Max = 68.600 ms
+IQR = 1.255 ms, LowerFence = 61.156 ms, UpperFence = 66.177 ms
+ConfidenceInterval = [63.229 ms; 64.632 ms] (CI 99.9%), Margin = 0.702 ms (1.10% of Mean)
+Skewness = 1.56, Kurtosis = 5.99, MValue = 2
+-------------------- Histogram --------------------
+[61.957 ms ; 63.742 ms) | @@@@@@@@@@@@@@@@@@
+[63.742 ms ; 65.923 ms) | @@@@@@@@@@@@@@@@@@@
+[65.923 ms ; 69.078 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 866.750 us, StdErr = 4.044 us (0.47%), N = 52, StdDev = 29.159 us
+Min = 822.129 us, Q1 = 847.816 us, Median = 859.666 us, Q3 = 878.549 us, Max = 976.304 us
+IQR = 30.732 us, LowerFence = 801.718 us, UpperFence = 924.647 us
+ConfidenceInterval = [852.630 us; 880.869 us] (CI 99.9%), Margin = 14.119 us (1.63% of Mean)
+Skewness = 1.76, Kurtosis = 6.42, MValue = 2
+-------------------- Histogram --------------------
+[819.631 us ; 842.748 us) | @@@@
+[842.748 us ; 863.255 us) | @@@@@@@@@@@@@@@@@@@@@@@@@@@
+[863.255 us ; 884.738 us) | @@@@@@@@@@@@@
+[884.738 us ; 904.056 us) | @@@@
+[904.056 us ; 927.290 us) |
+[927.290 us ; 966.050 us) | @@@
+[966.050 us ; 986.557 us) | @
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.642 ms, StdErr = 0.007 ms (0.42%), N = 16, StdDev = 0.028 ms
+Min = 1.596 ms, Q1 = 1.627 ms, Median = 1.640 ms, Q3 = 1.660 ms, Max = 1.691 ms
+IQR = 0.033 ms, LowerFence = 1.578 ms, UpperFence = 1.710 ms
+ConfidenceInterval = [1.614 ms; 1.671 ms] (CI 99.9%), Margin = 0.028 ms (1.73% of Mean)
+Skewness = -0.06, Kurtosis = 1.95, MValue = 2
+-------------------- Histogram --------------------
+[1.581 ms ; 1.630 ms) | @@@@@
+[1.630 ms ; 1.698 ms) | @@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.667 ms, StdErr = 0.009 ms (0.57%), N = 56, StdDev = 0.071 ms
+Min = 1.575 ms, Q1 = 1.614 ms, Median = 1.653 ms, Q3 = 1.700 ms, Max = 1.847 ms
+IQR = 0.086 ms, LowerFence = 1.486 ms, UpperFence = 1.828 ms
+ConfidenceInterval = [1.634 ms; 1.700 ms] (CI 99.9%), Margin = 0.033 ms (1.98% of Mean)
+Skewness = 0.85, Kurtosis = 2.9, MValue = 2
+-------------------- Histogram --------------------
+[1.571 ms ; 1.618 ms) | @@@@@@@@@@@@@@@
+[1.618 ms ; 1.681 ms) | @@@@@@@@@@@@@@@@@@@@@
+[1.681 ms ; 1.729 ms) | @@@@@@@@@@
+[1.729 ms ; 1.782 ms) | @@@@@
+[1.782 ms ; 1.849 ms) | @@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 4.406 ms, StdErr = 0.024 ms (0.54%), N = 34, StdDev = 0.140 ms
+Min = 4.224 ms, Q1 = 4.292 ms, Median = 4.369 ms, Q3 = 4.471 ms, Max = 4.781 ms
+IQR = 0.179 ms, LowerFence = 4.024 ms, UpperFence = 4.739 ms
+ConfidenceInterval = [4.319 ms; 4.492 ms] (CI 99.9%), Margin = 0.087 ms (1.96% of Mean)
+Skewness = 0.81, Kurtosis = 2.9, MValue = 2.13
+-------------------- Histogram --------------------
+[4.167 ms ; 4.254 ms) | @@@
+[4.254 ms ; 4.367 ms) | @@@@@@@@@@@@@@
+[4.367 ms ; 4.512 ms) | @@@@@@@@@@@
+[4.512 ms ; 4.659 ms) | @@@@
+[4.659 ms ; 4.785 ms) | @@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 5.767 ms, StdErr = 0.031 ms (0.53%), N = 26, StdDev = 0.156 ms
+Min = 5.552 ms, Q1 = 5.634 ms, Median = 5.716 ms, Q3 = 5.889 ms, Max = 6.111 ms
+IQR = 0.255 ms, LowerFence = 5.252 ms, UpperFence = 6.271 ms
+ConfidenceInterval = [5.653 ms; 5.881 ms] (CI 99.9%), Margin = 0.114 ms (1.98% of Mean)
+Skewness = 0.55, Kurtosis = 2.05, MValue = 2.57
+-------------------- Histogram --------------------
+[5.483 ms ; 5.721 ms) | @@@@@@@@@@@@@@
+[5.721 ms ; 5.855 ms) | @@@
+[5.855 ms ; 5.993 ms) | @@@@@@@
+[5.993 ms ; 6.151 ms) | @@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 5.784 ms, StdErr = 0.029 ms (0.50%), N = 20, StdDev = 0.129 ms
+Min = 5.580 ms, Q1 = 5.682 ms, Median = 5.766 ms, Q3 = 5.872 ms, Max = 6.062 ms
+IQR = 0.190 ms, LowerFence = 5.396 ms, UpperFence = 6.158 ms
+ConfidenceInterval = [5.672 ms; 5.896 ms] (CI 99.9%), Margin = 0.112 ms (1.94% of Mean)
+Skewness = 0.43, Kurtosis = 2.15, MValue = 2
+-------------------- Histogram --------------------
+[5.518 ms ; 5.648 ms) | @@
+[5.648 ms ; 5.773 ms) | @@@@@@@@@
+[5.773 ms ; 5.906 ms) | @@@@@@
+[5.906 ms ; 6.069 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 16.589 ms, StdErr = 0.063 ms (0.38%), N = 14, StdDev = 0.237 ms
+Min = 16.250 ms, Q1 = 16.412 ms, Median = 16.612 ms, Q3 = 16.683 ms, Max = 17.057 ms
+IQR = 0.271 ms, LowerFence = 16.005 ms, UpperFence = 17.089 ms
+ConfidenceInterval = [16.322 ms; 16.857 ms] (CI 99.9%), Margin = 0.268 ms (1.61% of Mean)
+Skewness = 0.43, Kurtosis = 2.21, MValue = 2
+-------------------- Histogram --------------------
+[16.184 ms ; 16.802 ms) | @@@@@@@@@@@@
+[16.802 ms ; 17.186 ms) | @@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 21.545 ms, StdErr = 0.065 ms (0.30%), N = 14, StdDev = 0.244 ms
+Min = 21.150 ms, Q1 = 21.378 ms, Median = 21.534 ms, Q3 = 21.768 ms, Max = 21.905 ms
+IQR = 0.390 ms, LowerFence = 20.794 ms, UpperFence = 22.352 ms
+ConfidenceInterval = [21.270 ms; 21.820 ms] (CI 99.9%), Margin = 0.275 ms (1.28% of Mean)
+Skewness = -0.11, Kurtosis = 1.48, MValue = 2
+-------------------- Histogram --------------------
+[21.111 ms ; 21.938 ms) | @@@@@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlLinux, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 21.267 ms, StdErr = 0.077 ms (0.36%), N = 15, StdDev = 0.299 ms
+Min = 20.935 ms, Q1 = 21.006 ms, Median = 21.219 ms, Q3 = 21.431 ms, Max = 21.772 ms
+IQR = 0.425 ms, LowerFence = 20.368 ms, UpperFence = 22.069 ms
+ConfidenceInterval = [20.947 ms; 21.586 ms] (CI 99.9%), Margin = 0.320 ms (1.50% of Mean)
+Skewness = 0.51, Kurtosis = 1.74, MValue = 2
+-------------------- Histogram --------------------
+[20.866 ms ; 21.876 ms) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.436 ms, StdErr = 0.008 ms (0.55%), N = 35, StdDev = 0.047 ms
+Min = 1.369 ms, Q1 = 1.398 ms, Median = 1.435 ms, Q3 = 1.454 ms, Max = 1.542 ms
+IQR = 0.056 ms, LowerFence = 1.314 ms, UpperFence = 1.539 ms
+ConfidenceInterval = [1.408 ms; 1.465 ms] (CI 99.9%), Margin = 0.028 ms (1.98% of Mean)
+Skewness = 0.65, Kurtosis = 2.66, MValue = 2
+-------------------- Histogram --------------------
+[1.368 ms ; 1.412 ms) | @@@@@@@@@@@
+[1.412 ms ; 1.450 ms) | @@@@@@@@@@@@@@
+[1.450 ms ; 1.519 ms) | @@@@@@@
+[1.519 ms ; 1.561 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.735 ms, StdErr = 0.010 ms (0.58%), N = 84, StdDev = 0.093 ms
+Min = 1.605 ms, Q1 = 1.669 ms, Median = 1.708 ms, Q3 = 1.781 ms, Max = 1.999 ms
+IQR = 0.112 ms, LowerFence = 1.500 ms, UpperFence = 1.950 ms
+ConfidenceInterval = [1.701 ms; 1.770 ms] (CI 99.9%), Margin = 0.034 ms (1.99% of Mean)
+Skewness = 0.93, Kurtosis = 2.96, MValue = 2.36
+-------------------- Histogram --------------------
+[1.594 ms ; 1.647 ms) | @@@@@@@@
+[1.647 ms ; 1.703 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[1.703 ms ; 1.761 ms) | @@@@@@@@@@@@@@@@@@@
+[1.761 ms ; 1.799 ms) | @@@
+[1.799 ms ; 1.854 ms) | @@@@@@@@@@
+[1.854 ms ; 1.925 ms) | @@@@@@@@
+[1.925 ms ; 2.004 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=50000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.676 ms, StdErr = 0.009 ms (0.56%), N = 46, StdDev = 0.064 ms
+Min = 1.586 ms, Q1 = 1.629 ms, Median = 1.662 ms, Q3 = 1.705 ms, Max = 1.846 ms
+IQR = 0.076 ms, LowerFence = 1.516 ms, UpperFence = 1.819 ms
+ConfidenceInterval = [1.643 ms; 1.710 ms] (CI 99.9%), Margin = 0.033 ms (1.99% of Mean)
+Skewness = 1.02, Kurtosis = 3.46, MValue = 2
+-------------------- Histogram --------------------
+[1.578 ms ; 1.624 ms) | @@@@@@@
+[1.624 ms ; 1.671 ms) | @@@@@@@@@@@@@@@@@@@@
+[1.671 ms ; 1.732 ms) | @@@@@@@@@@@@
+[1.732 ms ; 1.787 ms) | @@@@
+[1.787 ms ; 1.870 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 1.473 ms, StdErr = 0.008 ms (0.57%), N = 61, StdDev = 0.065 ms
+Min = 1.398 ms, Q1 = 1.430 ms, Median = 1.453 ms, Q3 = 1.507 ms, Max = 1.743 ms
+IQR = 0.077 ms, LowerFence = 1.314 ms, UpperFence = 1.624 ms
+ConfidenceInterval = [1.444 ms; 1.502 ms] (CI 99.9%), Margin = 0.029 ms (1.97% of Mean)
+Skewness = 1.74, Kurtosis = 6.72, MValue = 2
+-------------------- Histogram --------------------
+[1.376 ms ; 1.421 ms) | @@@@@@@@@@
+[1.421 ms ; 1.465 ms) | @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[1.465 ms ; 1.528 ms) | @@@@@@@@@@@@@
+[1.528 ms ; 1.587 ms) | @@@@@@@
+[1.587 ms ; 1.630 ms) |
+[1.630 ms ; 1.688 ms) | @
+[1.688 ms ; 1.764 ms) | @
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 5.992 ms, StdErr = 0.030 ms (0.51%), N = 21, StdDev = 0.139 ms
+Min = 5.795 ms, Q1 = 5.892 ms, Median = 5.978 ms, Q3 = 6.104 ms, Max = 6.290 ms
+IQR = 0.212 ms, LowerFence = 5.574 ms, UpperFence = 6.422 ms
+ConfidenceInterval = [5.875 ms; 6.109 ms] (CI 99.9%), Margin = 0.117 ms (1.95% of Mean)
+Skewness = 0.54, Kurtosis = 2.24, MValue = 2
+-------------------- Histogram --------------------
+[5.729 ms ; 5.882 ms) | @@@@@
+[5.882 ms ; 6.015 ms) | @@@@@@@@@
+[6.015 ms ; 6.205 ms) | @@@@@
+[6.205 ms ; 6.356 ms) | @@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=250000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 5.966 ms, StdErr = 0.031 ms (0.51%), N = 22, StdDev = 0.144 ms
+Min = 5.767 ms, Q1 = 5.849 ms, Median = 5.929 ms, Q3 = 6.055 ms, Max = 6.253 ms
+IQR = 0.206 ms, LowerFence = 5.540 ms, UpperFence = 6.363 ms
+ConfidenceInterval = [5.849 ms; 6.083 ms] (CI 99.9%), Margin = 0.117 ms (1.96% of Mean)
+Skewness = 0.66, Kurtosis = 2.05, MValue = 2.15
+-------------------- Histogram --------------------
+[5.700 ms ; 5.949 ms) | @@@@@@@@@@@@@
+[5.949 ms ; 6.094 ms) | @@@@
+[6.094 ms ; 6.254 ms) | @@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteCount: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 16.744 ms, StdErr = 0.088 ms (0.53%), N = 25, StdDev = 0.441 ms
+Min = 16.094 ms, Q1 = 16.396 ms, Median = 16.665 ms, Q3 = 17.083 ms, Max = 17.584 ms
+IQR = 0.687 ms, LowerFence = 15.366 ms, UpperFence = 18.113 ms
+ConfidenceInterval = [16.414 ms; 17.075 ms] (CI 99.9%), Margin = 0.330 ms (1.97% of Mean)
+Skewness = 0.52, Kurtosis = 1.95, MValue = 2.17
+-------------------- Histogram --------------------
+[15.896 ms ; 16.283 ms) | @@
+[16.283 ms ; 16.679 ms) | @@@@@@@@@@@@
+[16.679 ms ; 17.101 ms) | @@@@@
+[17.101 ms ; 17.623 ms) | @@@@@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteAvg: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 21.645 ms, StdErr = 0.089 ms (0.41%), N = 15, StdDev = 0.345 ms
+Min = 21.203 ms, Q1 = 21.324 ms, Median = 21.707 ms, Q3 = 21.777 ms, Max = 22.443 ms
+IQR = 0.453 ms, LowerFence = 20.646 ms, UpperFence = 22.456 ms
+ConfidenceInterval = [21.276 ms; 22.013 ms] (CI 99.9%), Margin = 0.369 ms (1.70% of Mean)
+Skewness = 0.53, Kurtosis = 2.59, MValue = 2
+-------------------- Histogram --------------------
+[21.020 ms ; 21.878 ms) | @@@@@@@@@@@@
+[21.878 ms ; 22.627 ms) | @@@
+---------------------------------------------------
+
+PgAggregatesSumBenchmarkService.ExecuteSum: Job-FMWRRE(WarmupCount=0) [BenchmarkDbType=PostgreSqlCitus, InitialTableSize=1000000]
+Runtime = .NET 8.0.11 (8.0.1124.51707), X64 RyuJIT AVX2; GC = Concurrent Workstation
+Mean = 21.704 ms, StdErr = 0.077 ms (0.36%), N = 13, StdDev = 0.279 ms
+Min = 21.328 ms, Q1 = 21.514 ms, Median = 21.699 ms, Q3 = 21.745 ms, Max = 22.360 ms
+IQR = 0.231 ms, LowerFence = 21.168 ms, UpperFence = 22.091 ms
+ConfidenceInterval = [21.370 ms; 22.038 ms] (CI 99.9%), Margin = 0.334 ms (1.54% of Mean)
+Skewness = 0.9, Kurtosis = 3.13, MValue = 2
+-------------------- Histogram --------------------
+[21.173 ms ; 21.857 ms) | @@@@@@@@@@@
+[21.857 ms ; 22.459 ms) | @@
+---------------------------------------------------
+```

@@ -3,7 +3,7 @@ using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
-namespace PostgreSqlBenchmark;
+namespace PostgreSqlBenchmark.Benchmarks.PgMsBigData;
 
 [WarmupCount(0)]
 public class BigOnLargeTableBenchmarkEfService

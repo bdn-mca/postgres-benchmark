@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
-namespace PostgreSqlBenchmark;
+namespace PostgreSqlBenchmark.Benchmarks.PgMsBigData;
 
 [WarmupCount(0)]
 [MaxIterationCount(30)]

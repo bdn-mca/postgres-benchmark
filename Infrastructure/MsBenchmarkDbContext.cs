@@ -29,5 +29,7 @@ internal class MsBenchmarkDbContext : BaseDbContext
             .ToTable("benchmark", "dbo");
 
         modelBuilder.Entity<BenchmarkSpEntity>(e => e.HasNoKey());
+        modelBuilder.Entity<BenchmarkCountSpEntity>(e => e.HasNoKey());
+        modelBuilder.Entity<BenchmarkAggregateSpEntity>(e => e.HasNoKey());
     }
 }

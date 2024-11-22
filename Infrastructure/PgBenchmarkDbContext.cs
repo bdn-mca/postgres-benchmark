@@ -35,6 +35,8 @@ internal class PgBenchmarkDbContext : BaseDbContext
             .ToTable("benchmark", "public");
 
         modelBuilder.Entity<BenchmarkSpEntity>(e => e.HasNoKey());
+        modelBuilder.Entity<BenchmarkCountSpEntity>(e => e.HasNoKey());
+        modelBuilder.Entity<BenchmarkAggregateSpEntity>(e => e.HasNoKey());
     }
 
     private string GetConnectionString()

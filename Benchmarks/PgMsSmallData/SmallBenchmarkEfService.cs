@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PostgreSqlBenchmark.Infrastructure;
 
-namespace PostgreSqlBenchmark;
+namespace PostgreSqlBenchmark.Benchmarks.PgMsSmallData;
 
 [WarmupCount(0)]
 public class SmallBenchmarkEfService
