@@ -3,14 +3,6 @@
 AS
 
 insert into Benchmark
-select VALUE, getdate(), null, 'StoredProcedure', VALUE%5, null, newid ()
+select getdate(), null, 'StoredProcedure', VALUE%20, null, newid (), rand() * 1000
 from generate_series(1, @itemsCount);
 
-CREATE OR ALTER PROCEDURE MsSqlBenchmarkInsert
-    @itemsCount integer,
-    @typesCount integer
-AS
-
-insert into Benchmark
-select VALUE, getdate(), null, 'StoredProcedure', VALUE%@typesCount, null, newid ()
-from generate_series(1, @itemsCount);

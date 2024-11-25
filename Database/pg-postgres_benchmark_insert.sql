@@ -8,23 +8,10 @@ LANGUAGE 'sql'
 AS $BODY$
 
 insert into benchmark
-select id, now(), null, 'StoredProcedure', id%5, null, gen_random_uuid ()
+select id, now(), null, 'StoredProcedure', id%20, null, gen_random_uuid (), random() * 1000
 from generate_series(1, itemsCount) as id;
 
 $BODY$;
 ALTER PROCEDURE public.postgres_benchmark_insert(integer)
     OWNER TO postgres;
 
-CREATE OR REPLACE PROCEDURE public.postgres_benchmark_insert(
-	IN itemscount integer,
-	IN typesCount integer)
-LANGUAGE 'sql'
-AS $BODY$
-
-insert into benchmark
-select id, now(), null, 'StoredProcedure', id%typesCount, null, gen_random_uuid ()
-from generate_series(1, itemsCount) as id;
-
-$BODY$;
-ALTER PROCEDURE public.postgres_benchmark_insert(integer)
-    OWNER TO postgres;
